@@ -11,7 +11,8 @@ type playing struct {
   spriteFactory *spriteFactory
   playerControls playerControls
 
-  playership entity
+  playership player
+  playerShots []shot
 }
 
 var _ state = &playing{}
@@ -25,9 +26,20 @@ func (p *playing) init() {
 }
 
 func (p *playing) tick(ms int)  (next string) {
+  p.playership.Tick(ms)
+
+  newShots := make([]shot, 0)
+  for i := range p.playerShots {
+    p.playerShots[i].Tick(ms)
+    if !p.playerShots[i].Gone() {
+      newShots = append(newShots, p.playerShots[i])
+    }
+  }
+  p.playerShots = newShots
+
   fmt.Println(ms)
   dx, dy := p.playerControls.combined()
-  pSpeed := playerSpeed * float64(ms) / 1000.0
+  pSpeed := normalizedSpeed(playerSpeed, ms)
   if dx != 0 && dy != 0 {
     pSpeed = pSpeed / playerSpeedDiagonalFactor
   }
@@ -46,6 +58,11 @@ func (p *playing) tick(ms int)  (next string) {
   if p.playership.y > float64(gfxHeight - int(p.playership.h) - 5) {
     p.playership.y = float64(gfxHeight - int(p.playership.h) - 5)
   }
+
+  if p.playerControls.shoot {
+    p.playerShots = append(p.playerShots, p.playership.shoot()...)
+  }
+
   return ""
 }
 
@@ -60,10 +77,17 @@ func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
 }
 
 func (p *playing) renderable() renderable {
-  return renderables{
+  result := renderables{
     p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), 0),
     p.spriteFactory.create("bg_playing", 0, 0, 0),
   }
+  for i := range p.playerShots {
+    result = append(
+      result,
+      p.spriteFactory.create("player_shot_1", int(p.playerShots[i].x), int(p.playerShots[i].y), 0),
+    )
+  }
+  return result
 }
 
 type playerControls struct {
@@ -164,4 +188,51 @@ func entityCollision(e1, e2 entity) (entity, bool) {
 const (
   // playerSpeed is the speed of the player in in-game pixels per second.
   playerSpeed = 100.0
+
+  playerReload = 100
 )
+
+type player struct {
+  entity
+
+  // reload is the time (in ms) weapon needs to reload. Can shoot if zero.
+  reload int
+}
+
+func (p *player) Tick(ms int) {
+  p.reload = max(p.reload - ms, 0)
+}
+
+func (p *player) shoot() []shot {
+  if p.reload > 0 {
+    return nil
+  }
+  p.reload = playerReload
+  _, y := p.Center()
+  return []shot{
+    {
+      entity: entity{
+        x: p.Right(),
+        y: y,
+        w: 4,
+        h: 4,
+      },
+      speedX: 200.0,
+    },
+  }
+}
+
+type shot struct {
+  entity
+
+  speedX float64
+  speedY float64
+}
+
+func (sh *shot) Tick(ms int) {
+  sh.x += normalizedSpeed(sh.speedX, ms)
+}
+
+func (sh *shot) Gone() bool {
+  return sh.x > float64(gfxWidth)+10
+}

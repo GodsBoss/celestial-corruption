@@ -17,3 +17,7 @@ func min(value int, rest ...int) int {
   }
   return value
 }
+
+func normalizedSpeed(speed float64, ms int) float64 {
+  return speed * float64(ms) / 1000.0
+}
