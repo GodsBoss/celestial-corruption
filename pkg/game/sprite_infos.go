@@ -73,6 +73,18 @@ var spriteInfos = map[string]spriteInfo{
     w: 36,
     h: 36,
   },
+  "message_starting_orders_1": {
+    x: 370,
+    y: 158,
+    w: 36,
+    h: 36,
+  },
+  "message_starting_orders_2": {
+    x: 370,
+    y: 194,
+    w: 36,
+    h: 36,
+  },
   "char_a": {
     x: 0,
     y: 762,

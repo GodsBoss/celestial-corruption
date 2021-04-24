@@ -3,6 +3,10 @@ package game
 var playingTriggers map[string]trigger = make(map[string]trigger)
 
 func init() {
+  doAddTrigger := func(name string) func(*playing) {
+    return doAddTriggerFromMap(name, playingTriggers)
+  }
+
   pTriggers := map[string]trigger{
     "init": newConditionalTrigger(
       alwaysOK,
@@ -60,18 +64,43 @@ func init() {
             },
           },
         ),
-        doAddTriggerFromMap("starting_orders", playingTriggers),
+        doAddTrigger("starting_orders_1"),
       ),
     ),
-    "starting_orders": newConditionalTrigger(
+    "starting_orders_1": newConditionalTrigger(
       killedAtLeast("practice", 3),
       multipleDos(
         doSetMessage(
           &message{
-            duration: seconds(30),
-            imageID: "",
+            duration: -1,
+            imageID: "starting_orders_1",
             contents: lines(
-              "Very good!",
+              "Very good! Now that you are an expert in",
+              "handling both your vessel and enemies,",
+              "here are your orders. Fight your way",
+              "through the alien swarms to Timos-1.",
+              "There is a weapons laboratory.",
+            ),
+          },
+        ),
+        doSetTimer("starting_orders_1", seconds(12)),
+        doAddTrigger("starting_orders_2"),
+      ),
+    ),
+    "starting_orders_2": newConditionalTrigger(
+      timerFinished("starting_orders_1"),
+      multipleDos(
+        doRemoveTimer("starting_orders_1"),
+        doSetMessage(
+          &message{
+            duration: seconds(12),
+            imageID: "starting_orders_2",
+            contents: lines(
+              "They developed a revolutionary weapon,",
+              "the Quantum Bomb 9001. It will be loaded",
+              "onto your ship. After that, fly to the",
+              "alien homeworld and drop it to destroy",
+              "the whole planet.",
             ),
           },
         ),
