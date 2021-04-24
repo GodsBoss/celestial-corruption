@@ -105,7 +105,8 @@ func (p *playing) tick(ms int)  (next string) {
     return "game_over"
   }
 
-  p.playerControls.setSpeed(&p.playership)
+  // p.playerControls.setSpeed(&p.playership)
+  (&cinematicControl{}).setSpeed(&p.playership)
 
   if p.playerControls.shoot {
     p.playerShots = append(p.playerShots, p.playership.shoot()...)

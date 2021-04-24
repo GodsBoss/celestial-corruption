@@ -112,3 +112,25 @@ func (pc *playerControls) setSpeed(p *player) {
   p.dx = float64(dx) * pSpeed
   p.dy = float64(dy) * pSpeed
 }
+
+// Position of the player's ship in cinematics.
+const (
+  cinematicPlayerX = 50.0
+  cinematicPlayerY = float64(gfxHeight) / 2.0
+  cinematicDistanceThreshold = 2
+)
+
+type cinematicControl struct{}
+
+func (cc *cinematicControl) setSpeed(p *player) {
+  targetX, targetY := cinematicPlayerX - p.w / 2, cinematicPlayerY - p.h / 2
+  pSpeed := playerSpeed / 2
+  d := distance(p.x, p.y, targetX, targetY)
+  if d < cinematicDistanceThreshold {
+    p.dx = 0
+    p.dy = 0
+    return
+  }
+  p.dx = pSpeed * (targetX - p.x) / d
+  p.dy = pSpeed * (targetY - p.y) / d
+}
