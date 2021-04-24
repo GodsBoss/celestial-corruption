@@ -25,7 +25,7 @@ func (p *playing) init() {
       w: 36,
       h: 12,
       x: 20,
-      y: float64(gfxHeight) / 2 - p.playership.h / 2,
+      y: 0, // Needs h to be present.
     },
     health: playerMaxHealth,
     animation: animation{
@@ -33,6 +33,7 @@ func (p *playing) init() {
       msPerFrame: 100,
     },
   }
+  p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
   p.playerShots = []shot{}
   p.enemies = []enemy{
     {
