@@ -36,6 +36,9 @@ func New(img *dom.Image) dominit.Game {
 			"game_over": &gameOver{
 				spriteFactory: sf,
 			},
+			"epilogue": &epilogue{
+				spriteFactory: sf,
+			},
 		},
 	}
 	g.nextState("title")

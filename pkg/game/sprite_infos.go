@@ -19,7 +19,7 @@ var spriteInfos = map[string]spriteInfo{
     w: 320,
     h: 200,
   },
-  "bg_epilog": {
+  "bg_epilogue": {
     x: 640,
     y: 600,
     w: 320,

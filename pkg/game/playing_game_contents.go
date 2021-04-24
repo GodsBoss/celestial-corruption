@@ -237,10 +237,12 @@ func init() {
     },
     "end_the_game": newConditionalTrigger(
       allOf(
-        killedAtLeast("nightmare_1", 2),
-        killedAtLeast("nightmare_2", 2),
+        killedAtLeast("corrupted_earth_forces_1", 2),
+        killedAtLeast("corrupted_earth_forces_2", 2),
       ),
-      multipleDos(),
+      multipleDos(
+        doSetNextState("epilogue"),
+      ),
     ),
   }
   for tID := range pTriggers {
