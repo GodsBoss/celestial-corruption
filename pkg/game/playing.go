@@ -32,6 +32,7 @@ func (p *playing) init() {
       maxFrame: 3,
       msPerFrame: 100,
     },
+    speedControl: &p.playerControls,
   }
   p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
   p.playerShots = []shot{}
@@ -109,13 +110,13 @@ func (p *playing) tick(ms int)  (next string) {
     }
   }
   p.enemies = newEnemies
+  if len(p.enemies) == 0 {
+    p.playership.speedControl = &cinematicControl{}
+  }
 
   if !p.playership.Alive() {
     return "game_over"
   }
-
-  // p.playerControls.setSpeed(&p.playership)
-  (&cinematicControl{}).setSpeed(&p.playership)
 
   if p.playerControls.shoot {
     p.playerShots = append(p.playerShots, p.playership.shoot()...)

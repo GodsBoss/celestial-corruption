@@ -22,9 +22,12 @@ type player struct {
   health int
 
   animation
+
+  speedControl playerSpeedControl
 }
 
 func (p *player) Tick(ms int) {
+  p.speedControl.setSpeed(p)
   p.reload = max(p.reload - ms, 0)
   p.animation.Tick(ms)
   p.entity.Tick(ms)
@@ -137,4 +140,8 @@ func (cc *cinematicControl) setSpeed(p *player) {
   }
   p.dx = pSpeed * (targetX - p.x) / d
   p.dy = pSpeed * (targetY - p.y) / d
+}
+
+type playerSpeedControl interface {
+  setSpeed(p *player)
 }
