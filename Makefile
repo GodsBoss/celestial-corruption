@@ -2,13 +2,13 @@ GOROOT ?= /usr/local/go
 
 all: dist/main.wasm dist/wasm_exec.js dist/index.html dist/gfx.png
 
-dist/main.wasm: dist
+dist/main.wasm: | dist
 	GOOS=js GOARCH=wasm go build -o $@ ./main
 
-dist/wasm_exec.js: $(GOROOT)/misc/wasm/wasm_exec.js dist
+dist/wasm_exec.js: $(GOROOT)/misc/wasm/wasm_exec.js | dist
 	cp $< $@
 
-dist/index.html: static/index.html dist
+dist/index.html: static/index.html | dist
 	cp $< $@
 
 dist/gfx.png: gfx/gfx.xcf gfx/gfx.sh
