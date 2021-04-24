@@ -117,6 +117,7 @@ func init() {
           },
         ),
         doAddTrigger("spawn_first_wave"),
+        doAddTrigger("stop_first_wave"),
       ),
     ),
     "spawn_first_wave": &randomSpawner{
@@ -124,6 +125,13 @@ func init() {
       spawn: spawnOneEnemyTypeRandomly(spawnEnemy1, spawnEnemy2),
       maxEnemies: 10,
     },
+    "stop_first_wave": newConditionalTrigger(
+      allOf(
+        killedAtLeast("1", 2),
+        killedAtLeast("2", 2),
+      ),
+      doRemoveTrigger("spawn_first_wave"),
+    ),
   }
   for tID := range pTriggers {
     playingTriggers[tID] = pTriggers[tID]
