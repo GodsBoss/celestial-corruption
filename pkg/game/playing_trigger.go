@@ -72,6 +72,12 @@ func playerIsDead() func(*playing) bool {
   }
 }
 
+func showsMessage() func(*playing) bool {
+  return func(p *playing) bool {
+    return p.message != nil
+  }
+}
+
 func invertCheck(f func(*playing) bool) func(*playing) bool {
   return func(p *playing) bool {
     return !f(p)
