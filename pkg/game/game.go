@@ -33,7 +33,12 @@ func (g *game) SetOutput(ctx2d *dom.Context2D) {
   g.output = ctx2d
 }
 
-func (g *game) Render() {}
+func (g *game) Render() {
+	g.output.ClearRect(0, 0, gfxWidth*g.scale, gfxHeight*g.scale)
+	fillStyle, _ := dom.NewColorCanvasFillStyle("#111111")
+	g.output.SetFillStyle(fillStyle)
+	g.output.FillRect(0, 0, gfxWidth*g.scale, gfxHeight*g.scale)
+}
 
 func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight int, scaleX, scaleY float64) {
   wf, hf := (availableWidth - 20) / gfxWidth, (availableHeight - 20) / gfxHeight
