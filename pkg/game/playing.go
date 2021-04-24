@@ -45,6 +45,10 @@ func (p *playing) init() {
       maxFrame: 1,
       msPerFrame: 250,
     },
+    contents: lines(
+      "This is a very important",
+      "message.",
+    ),
   }
   p.enemies = []enemy{}
 }

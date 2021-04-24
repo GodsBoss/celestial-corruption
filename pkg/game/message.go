@@ -8,6 +8,8 @@ type message struct {
   imageID string
 
   imageAnimation animation
+
+  contents string
 }
 
 func (msg *message) Tick(ms int) {
@@ -26,6 +28,7 @@ func (msg *message) renderable(sf *spriteFactory) renderable {
   return renderables{
     sf.create("message_container", 10, 146, 0),
     sf.create("message_" + msg.imageID, 14, 150, msg.imageAnimation.Frame()),
+    newText(msg.contents, 54, 150).renderable(sf),
   }
 }
 
