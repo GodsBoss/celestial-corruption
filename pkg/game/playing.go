@@ -77,7 +77,7 @@ func (p *playing) tick(ms int)  (next string) {
   p.handleEnemyPlayerCollisions()
   p.removeOverMessage()
 
-  p.handleTriggers()
+  p.handleTriggers(ms)
 
   p.playerShots = append(p.playerShots, p.playership.shots()...)
 
@@ -147,9 +147,12 @@ func (p *playing) removeOverMessage() {
   }
 }
 
-func (p *playing) handleTriggers() {
+func (p *playing) handleTriggers(ms int) {
   leftOverTriggers := make(map[string]trigger, 0)
   for name := range p.triggers {
+    if tickableTrigger, ok := p.triggers[name].(tickable); ok {
+      tickableTrigger.Tick(ms)
+    }
     if p.triggers[name].run(p) {
       leftOverTriggers[name] = p.triggers[name]
     }
@@ -165,6 +168,10 @@ func (p *playing) handleTriggers() {
     p.triggers[id] = p.additionalTriggers[id]
   }
   p.additionalTriggers = make(map[string]trigger)
+}
+
+type tickable interface {
+  Tick(ms int)
 }
 
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)
