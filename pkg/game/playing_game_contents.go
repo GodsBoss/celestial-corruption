@@ -121,7 +121,7 @@ func init() {
     ),
     "spawn_first_wave": &randomSpawner{
       spawnInterval: seconds(1),
-      spawn: spawnEnemy1,
+      spawn: spawnOneEnemyTypeRandomly(spawnEnemy1, spawnEnemy2),
       maxEnemies: 10,
     },
   }
@@ -149,6 +149,28 @@ func spawnEnemy1() enemy {
     },
     health: 500,
     ramDamage: 100,
+  }
+}
+
+func spawnEnemy2() enemy {
+  return enemy{
+    Type: "2",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 800,
+    ramDamage: 200,
   }
 }
 
