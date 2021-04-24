@@ -6,6 +6,9 @@ type enemy struct {
 
   Type string
   health int
+
+  // ramDamage is the damage dealt if the enemy collides with the player.
+  ramDamage int
 }
 
 func (e *enemy) Tick(ms int) {}

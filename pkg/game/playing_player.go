@@ -9,6 +9,8 @@ const (
   playerSpeed = 100.0
 
   playerReload = 100
+
+  playerMaxHealth = 1000
 )
 
 type player struct {
@@ -16,6 +18,8 @@ type player struct {
 
   // reload is the time (in ms) weapon needs to reload. Can shoot if zero.
   reload int
+
+  health int
 }
 
 func (p *player) Tick(ms int) {

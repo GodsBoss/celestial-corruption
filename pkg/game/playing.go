@@ -27,6 +27,7 @@ func (p *playing) init() {
       x: 20,
       y: float64(gfxHeight) / 2 - p.playership.h / 2,
     },
+    health: playerMaxHealth,
   }
   p.playerShots = []shot{}
   p.enemies = []enemy{
@@ -39,6 +40,7 @@ func (p *playing) init() {
       },
       health: 1000,
       Type: "1",
+      ramDamage: 800,
     },
     {
       entity: entity{
@@ -49,6 +51,7 @@ func (p *playing) init() {
       },
       health: 1000,
       Type: "2",
+      ramDamage: 800,
     },
   }
 }
@@ -78,6 +81,17 @@ func (p *playing) tick(ms int)  (next string) {
     }
     p.playerShots = newShots
     if p.enemies[i].Alive() {
+      newEnemies = append(newEnemies, p.enemies[i])
+    }
+  }
+  p.enemies = newEnemies
+
+  newEnemies = make([]enemy, 0)
+  for i := range p.enemies {
+    if _, collision := entityCollision(p.enemies[i].entity, p.playership.entity); collision {
+      p.playership.health = max(0, p.playership.health - p.enemies[i].ramDamage)
+      p.enemies[i].health = 0
+    } else {
       newEnemies = append(newEnemies, p.enemies[i])
     }
   }
