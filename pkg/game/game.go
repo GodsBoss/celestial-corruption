@@ -6,7 +6,9 @@ import (
 	"github.com/GodsBoss/gggg/pkg/interaction"
 )
 
-type game struct{}
+type game struct{
+  output *dom.Context2D
+}
 
 func New() dominit.Game {
 	return &game{}
@@ -22,7 +24,9 @@ func (g *game) ReceiveKeyEvent(event interaction.KeyEvent) {}
 
 func (g *game) ReceiveMouseEvent(event interaction.MouseEvent) {}
 
-func (g *game) SetOutput(ctx2d *dom.Context2D) {}
+func (g *game) SetOutput(ctx2d *dom.Context2D) {
+  g.output = ctx2d
+}
 
 func (g *game) Render() {}
 
