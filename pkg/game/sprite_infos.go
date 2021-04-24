@@ -13,4 +13,10 @@ var spriteInfos = map[string]spriteInfo{
     w: 320,
     h: 200,
   },
+  "player_ship": {
+    x: 2,
+    y: 2,
+    w: 36,
+    h: 12,
+  },
 }
