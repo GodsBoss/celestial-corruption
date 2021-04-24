@@ -30,8 +30,8 @@ type playing struct {
 var _ state = &playing{}
 
 func (p *playing) init() {
-  p.timers = make(timers)
   p.keyboardControl = keyboardControl{}
+
   p.playership = player{
     entity: entity{
       w: 36,
@@ -47,11 +47,15 @@ func (p *playing) init() {
     control: &p.keyboardControl,
   }
   p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
-  p.playerShots = []shot{}
+
+  p.playerShots = nil
+  p.enemies = nil
+  p.message = nil
   p.triggers = []trigger{
     playingTriggers["init"],
   }
-  p.enemies = []enemy{}
+  p.additionalTriggers = nil
+  p.timers = make(timers)
 }
 
 func (p *playing) tick(ms int)  (next string) {
