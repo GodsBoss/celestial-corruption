@@ -1,7 +1,8 @@
 package game
 
 type message struct {
-  // duration is the duration (in ms) the message is shown.
+  // duration is the duration (in ms) the message is shown. Message does not
+  // automatically fade away if this is negative.
   duration int
 
   // imageID is the image shown in the communication screen.
@@ -17,11 +18,13 @@ func (msg *message) Tick(ms int) {
     return
   }
   msg.imageAnimation.Tick(ms)
-  msg.duration -= ms
+  if msg.duration > 0 {
+    msg.duration = max(0, msg.duration - ms)
+  }
 }
 
 func (msg *message) Over() bool {
-  return msg == nil || msg.duration <= 0
+  return msg == nil || msg.duration == 0
 }
 
 func (msg *message) renderable(sf *spriteFactory) renderable {
@@ -35,4 +38,5 @@ func (msg *message) renderable(sf *spriteFactory) renderable {
 const (
   messageX = 10
   messageY = 150
+  forever = -1
 )
