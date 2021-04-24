@@ -20,7 +20,7 @@ type enemy struct {
 }
 
 func (e *enemy) Tick(ms int) {
-  e.control.control(e)
+  e.control.control(ms, e)
   e.entity.Tick(ms)
   e.animation.Tick(ms)
 }
@@ -30,15 +30,19 @@ func (e *enemy) Alive() bool {
 }
 
 type enemyControl interface {
-  control(*enemy)
+  control(ms int, e *enemy)
 }
 
 type nopEnemyControl struct{}
 
-func (ctrl nopEnemyControl) control(_ *enemy) {}
+func (ctrl nopEnemyControl) control(_ int, _ *enemy) {}
 
-type enemyControlFunc func(*enemy)
+type enemyControlFunc func(ms int, e *enemy)
 
-func (f enemyControlFunc) control(e *enemy) {
-  f(e)
+func (f enemyControlFunc) control(ms int, e *enemy) {
+  f(ms, e)
+}
+
+type randomMovement struct {
+
 }
