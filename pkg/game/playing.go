@@ -147,7 +147,7 @@ func (p *playing) renderable() renderable {
   for i := range p.playerShots {
     result = append(
       result,
-      p.spriteFactory.create("player_shot_1", int(p.playerShots[i].x), int(p.playerShots[i].y), 0),
+      p.spriteFactory.create("player_shot_1", int(p.playerShots[i].x), int(p.playerShots[i].y), p.playerShots[i].Frame()),
     )
   }
   result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()))

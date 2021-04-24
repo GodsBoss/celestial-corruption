@@ -59,6 +59,10 @@ func (p *player) shoot() []shot {
         dx: 200.0,
       },
       power: 100,
+      animation: animation{
+        maxFrame: 3,
+        msPerFrame: 50,
+      },
     },
   }
 }
