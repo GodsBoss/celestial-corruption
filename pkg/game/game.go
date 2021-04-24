@@ -20,7 +20,7 @@ func New(img *dom.Image) dominit.Game {
 }
 
 func (g *game) TicksPerSecond() int {
-	return 40
+	return tps
 }
 
 func (g *game) Tick(ms int) {}
@@ -56,4 +56,6 @@ func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight
 const (
   gfxWidth int = 320
   gfxHeight int = 200
+
+	tps = 40
 )
