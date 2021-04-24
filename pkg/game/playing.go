@@ -25,6 +25,8 @@ type playing struct {
   additionalTriggers []trigger
 
   timers timers
+
+  kills map[string]int
 }
 
 var _ state = &playing{}
@@ -56,6 +58,7 @@ func (p *playing) init() {
   }
   p.additionalTriggers = nil
   p.timers = make(timers)
+  p.kills = make(map[string]int)
 }
 
 func (p *playing) tick(ms int)  (next string) {
@@ -112,6 +115,8 @@ func (p *playing) handleEnemyShotCollisions() {
     p.playerShots = newShots
     if p.enemies[i].Alive() {
       newEnemies = append(newEnemies, p.enemies[i])
+    } else {
+      p.kills[p.enemies[i].Type]++
     }
   }
   p.enemies = newEnemies
@@ -123,6 +128,7 @@ func (p *playing) handleEnemyPlayerCollisions() {
     if _, collision := entityCollision(p.enemies[i].entity, p.playership.entity); collision {
       p.playership.health = max(0, p.playership.health - p.enemies[i].ramDamage)
       p.enemies[i].health = 0
+      p.kills[p.enemies[i].Type]++
     } else {
       newEnemies = append(newEnemies, p.enemies[i])
     }
