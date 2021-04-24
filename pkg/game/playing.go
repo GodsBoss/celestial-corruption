@@ -26,6 +26,8 @@ type playing struct {
   // iteration.
   additionalTriggers map[string]trigger
 
+  triggersToRemove []string
+
   timers timers
 
   kills map[string]int
@@ -62,6 +64,7 @@ func (p *playing) init() {
     "init": playingTriggers["init"],
   }
   p.additionalTriggers = make(map[string]trigger)
+  p.triggersToRemove = nil
   p.timers = make(timers)
   p.kills = make(map[string]int)
   p.nextState = ""
@@ -152,6 +155,12 @@ func (p *playing) handleTriggers() {
     }
   }
   p.triggers = leftOverTriggers
+  for _, name := range p.triggersToRemove {
+    if _, ok := p.triggers[name]; ok {
+      delete(p.triggers, name)
+    }
+  }
+  p.triggersToRemove = nil
   for id := range p.additionalTriggers {
     p.triggers[id] = p.additionalTriggers[id]
   }

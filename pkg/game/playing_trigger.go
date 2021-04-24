@@ -92,6 +92,12 @@ func doAddTriggerFromMap(name string, m map[string]trigger) func(*playing) {
   }
 }
 
+func doRemoveTrigger(name string) func(*playing) {
+  return func(p *playing) {
+    p.triggersToRemove = append(p.triggersToRemove, name)
+  }
+}
+
 func doAddEnemies(enemies []enemy) func(*playing){
   return func(p *playing) {
     for i := range enemies{
