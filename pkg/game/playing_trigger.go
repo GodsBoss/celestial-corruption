@@ -1,0 +1,39 @@
+package game
+
+type trigger interface {
+  // run runs the trigger. If it returns false, it is removed.
+  run(*playing) (keep bool)
+}
+
+type triggerFunc func(*playing) (keep bool)
+
+func (f triggerFunc) run(p *playing) (keep bool){
+  return f(p)
+}
+
+type conditionalTrigger struct {
+  check func(*playing) bool
+  do func(*playing)
+}
+
+func (t *conditionalTrigger) run(p *playing) (keep bool) {
+  if t.check(p) {
+    t.do(p)
+    return true
+  }
+  return false
+}
+
+func constCheckFunc(b bool) func(*playing) bool {
+  return func(_ *playing) bool {
+    return b
+  }
+}
+
+func multipleDos(dos ...func(*playing)) func(*playing) {
+  return func(p *playing) {
+    for i := range dos {
+      dos[i](p)
+    }
+  }
+}

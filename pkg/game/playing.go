@@ -16,6 +16,8 @@ type playing struct {
   enemies []enemy
 
   message *message
+
+  triggers []trigger
 }
 
 var _ state = &playing{}
@@ -59,6 +61,8 @@ func (p *playing) tick(ms int)  (next string) {
   p.handleEnemyShotCollisions()
   p.handleEnemyPlayerCollisions()
   p.removeOverMessage()
+
+  p.handleTriggers()
 
   if !p.playership.Alive() {
     return "game_over"
@@ -126,6 +130,16 @@ func (p *playing) removeOverMessage() {
   if p.message.Over() {
     p.message = nil
   }
+}
+
+func (p *playing) handleTriggers() {
+  leftOverTriggers := make([]trigger, 0)
+  for i := range p.triggers {
+    if p.triggers[i].run(p) {
+      leftOverTriggers = append(leftOverTriggers, p.triggers[i])
+    }
+  }
+  p.triggers = leftOverTriggers
 }
 
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)
