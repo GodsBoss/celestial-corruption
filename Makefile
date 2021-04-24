@@ -11,7 +11,7 @@ dist/wasm_exec.js: $(GOROOT)/misc/wasm/wasm_exec.js | dist
 dist/index.html: static/index.html | dist
 	cp $< $@
 
-dist/gfx.png: gfx/gfx.xcf gfx/gfx.sh
+dist/gfx.png: gfx/gfx.xcf gfx/gfx.sh | dist
 	gfx/gfx.sh $< $@
 
 dist:
