@@ -4,7 +4,9 @@ import (
   "github.com/GodsBoss/gggg/pkg/interaction"
 )
 
-type title struct {}
+type title struct {
+  spriteFactory *spriteFactory
+}
 
 var _ state = &title{}
 
@@ -15,9 +17,12 @@ func (t *title) tick(ms int) (next string) {
 }
 
 func (t *title) receiveKeyEvent(event interaction.KeyEvent) (next string) {
+  if event.Key == "p" {
+    return "playing"
+  }
   return ""
 }
 
-func (t *title) renderables() renderable {
-  return nopRenderable{}
+func (t *title) renderable() renderable {
+  return t.spriteFactory.create("bg_title", 0, 0, 0)
 }

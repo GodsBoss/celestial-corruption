@@ -16,15 +16,25 @@ type game struct{
 }
 
 func New(img *dom.Image) dominit.Game {
+	scale := &sharableInt{}
+	scale.Set(1)
+	sf := &spriteFactory{
+		source: img,
+		scale: scale,
+		infos: spriteInfos,
+	}
 	g := &game{
 		img: img,
-		scale: &sharableInt{},
+		scale: scale,
 		states: map[string]state{
-			"title": &title{},
-			"playing": &playing{},
+			"title": &title{
+				spriteFactory: sf,
+			},
+			"playing": &playing{
+				spriteFactory: sf,
+			},
 		},
 	}
-	g.scale.Set(1)
 	g.nextState("title")
 	return g
 }
@@ -66,6 +76,7 @@ func (g *game) Render() {
 	fillStyle, _ := dom.NewColorCanvasFillStyle("#111111")
 	g.output.SetFillStyle(fillStyle)
 	g.output.FillRect(0, 0, gfxWidth*scale, gfxHeight*scale)
+	g.currentState().renderable().Render(g.output)
 }
 
 func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight int, scaleX, scaleY float64) {
