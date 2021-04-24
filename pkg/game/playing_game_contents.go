@@ -226,6 +226,139 @@ func spawnEnemy2() enemy {
   }
 }
 
+func spawnEnemyAlien() enemy {
+  return enemy{
+    Type: "alien",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 1,
+    ramDamage: 200,
+  }
+}
+
+func spawnEnemyBrainy() enemy {
+  return enemy{
+    Type: "brainy",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 1,
+    ramDamage: 200,
+  }
+}
+
+func spawnEnemyNightmare1() enemy {
+  return enemy{
+    Type: "nightmare_1",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 1,
+    ramDamage: 200,
+  }
+}
+
+func spawnEnemyNightmare2() enemy {
+  return enemy{
+    Type: "nightmare_2",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 1,
+    ramDamage: 200,
+  }
+}
+
+func spawnEnemyCorruptedEarthForces1() enemy {
+  return enemy{
+    Type: "corrupted_earth_forces_1",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 1,
+    ramDamage: 200,
+  }
+}
+
+func spawnEnemyCorruptedEarthForces2() enemy {
+  return enemy{
+    Type: "corrupted_earth_forces_2",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 40.0,
+      switchTargetInterval: seconds(2),
+    },
+    health: 1,
+    ramDamage: 200,
+  }
+}
+
+
 func seconds(s int) (ms int) {
   return s * 1000
 }
