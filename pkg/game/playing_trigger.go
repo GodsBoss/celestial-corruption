@@ -66,6 +66,12 @@ func timerFinished(name string) func(*playing) bool {
   }
 }
 
+func playerIsDead() func(*playing) bool {
+  return func(p *playing) bool {
+    return !p.playership.Alive()
+  }
+}
+
 func multipleDos(dos ...func(*playing)) func(*playing) {
   return func(p *playing) {
     for i := range dos {

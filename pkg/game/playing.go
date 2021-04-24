@@ -64,6 +64,7 @@ func (p *playing) init() {
   p.additionalTriggers = nil
   p.timers = make(timers)
   p.kills = make(map[string]int)
+  p.nextState = ""
 }
 
 func (p *playing) tick(ms int)  (next string) {
@@ -74,10 +75,6 @@ func (p *playing) tick(ms int)  (next string) {
   p.removeOverMessage()
 
   p.handleTriggers()
-
-  if !p.playership.Alive() {
-    return "game_over"
-  }
 
   p.playerShots = append(p.playerShots, p.playership.shots()...)
 

@@ -67,8 +67,13 @@ func init() {
             },
           },
         ),
+        doAddTrigger("player_dies"),
         doAddTrigger("starting_orders_1"),
       ),
+    ),
+    "player_dies": newConditionalTrigger(
+      playerIsDead(),
+      doSetNextState("game_over"),
     ),
     "starting_orders_1": newConditionalTrigger(
       killedAtLeast("practice", 3),
