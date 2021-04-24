@@ -48,26 +48,9 @@ func (p *playing) init() {
   }
   p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
   p.playerShots = []shot{}
-  p.triggers = append(
-    p.triggers,
-    newConditionalTrigger(
-      constCheckFunc(true),
-      doSetMessage(
-        &message{
-          duration: 5000,
-          imageID: "test",
-          imageAnimation: animation {
-            maxFrame: 1,
-            msPerFrame: 250,
-          },
-          contents: lines(
-            "This is a very important",
-            "message.",
-          ),
-        },
-      ),
-    ),
-  )
+  p.triggers = []trigger{
+    playingTriggers["init"],
+  }
   p.enemies = []enemy{}
 }
 

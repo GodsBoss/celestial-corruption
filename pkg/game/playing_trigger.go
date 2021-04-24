@@ -37,6 +37,11 @@ func constCheckFunc(b bool) func(*playing) bool {
   }
 }
 
+var (
+  alwaysOK = constCheckFunc(true)
+  never = constCheckFunc(false)
+)
+
 func multipleDos(dos ...func(*playing)) func(*playing) {
   return func(p *playing) {
     for i := range dos {
