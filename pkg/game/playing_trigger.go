@@ -72,6 +72,12 @@ func playerIsDead() func(*playing) bool {
   }
 }
 
+func invertCheck(f func(*playing) bool) func(*playing) bool {
+  return func(p *playing) bool {
+    return !f(p)
+  }
+}
+
 func multipleDos(dos ...func(*playing)) func(*playing) {
   return func(p *playing) {
     for i := range dos {
