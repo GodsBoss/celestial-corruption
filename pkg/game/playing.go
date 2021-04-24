@@ -141,7 +141,6 @@ func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
 
 func (p *playing) renderable() renderable {
   result := renderables{
-    p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), 0),
     p.spriteFactory.create("bg_playing", 0, 0, 0),
   }
   for i := range p.enemies {
@@ -156,6 +155,7 @@ func (p *playing) renderable() renderable {
       p.spriteFactory.create("player_shot_1", int(p.playerShots[i].x), int(p.playerShots[i].y), 0),
     )
   }
+  result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), 0))
   return result
 }
 
