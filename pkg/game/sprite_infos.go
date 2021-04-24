@@ -43,4 +43,10 @@ var spriteInfos = map[string]spriteInfo{
     w: 24,
     h: 24,
   },
+  "cinematic_screen": {
+    x: 150,
+    y: 0,
+    w: 48,
+    h: 48,
+  },
 }
