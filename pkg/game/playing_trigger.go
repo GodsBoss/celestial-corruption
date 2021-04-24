@@ -118,3 +118,15 @@ func doSetNextState(nextState string) func(*playing) {
     p.nextState = nextState
   }
 }
+
+func doSetCinematicControl() func(*playing) {
+  return func(p *playing) {
+    p.playership.control = &cinematicControl{}
+  }
+}
+
+func doSetKeyboardControl() func(*playing) {
+  return func(p *playing) {
+    p.playership.control = &p.keyboardControl
+  }
+}
