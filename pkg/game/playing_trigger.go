@@ -48,6 +48,12 @@ func killedAtLeast(typ string, count int) func(*playing) bool {
   }
 }
 
+func enemyShotsAtMost(count int) func(*playing) bool {
+  return func(p *playing) bool {
+    return len(p.enemyShots) <= count
+  }
+}
+
 func timerFinished(name string) func(*playing) bool {
   return func(p *playing) bool {
     return p.timers.Finished(name)
