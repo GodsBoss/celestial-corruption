@@ -67,6 +67,42 @@ var spriteInfos = map[string]spriteInfo{
     w: 24,
     h: 24,
   },
+  "enemy_alien": {
+    x: 2,
+    y: 20,
+    w: 24,
+    h: 24,
+  },
+  "enemy_brainy": {
+    x: 2,
+    y: 46,
+    w: 24,
+    h: 24,
+  },
+  "enemy_nightmare_1": {
+    x: 2,
+    y: 20,
+    w: 24,
+    h: 24,
+  },
+  "enemy_nightmare_2": {
+    x: 2,
+    y: 46,
+    w: 24,
+    h: 24,
+  },
+  "enemy_corrupted_earth_forces_1": {
+    x: 2,
+    y: 20,
+    w: 24,
+    h: 24,
+  },
+  "enemy_corrupted_earth_forces_2": {
+    x: 2,
+    y: 46,
+    w: 24,
+    h: 24,
+  },
   "message_container": {
     x: 340,
     y: 0,
