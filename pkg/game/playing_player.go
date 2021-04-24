@@ -55,6 +55,11 @@ func (p *player) shots() []shot {
   }
   p.reload = playerReload
   _, y := p.Center()
+  anim := &animation{
+    maxFrame: 3,
+    msPerFrame: 50,
+  }
+  anim.Randomize()
   return []shot{
     {
       entity: entity{
@@ -65,10 +70,7 @@ func (p *player) shots() []shot {
         dx: 200.0,
       },
       power: 100,
-      animation: animation{
-        maxFrame: 3,
-        msPerFrame: 50,
-      },
+      animation: *anim,
       control: nopShotControl{},
     },
   }

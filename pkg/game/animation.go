@@ -1,5 +1,9 @@
 package game
 
+import (
+  "math/rand"
+)
+
 type animation struct {
   maxFrame int
   msPerFrame int
@@ -22,4 +26,11 @@ func (anim *animation) Frame() int {
     return 0
   }
   return anim.current / anim.msPerFrame
+}
+
+func (anim *animation) Randomize() {
+  if anim.maxFrame == 0 {
+    return
+  }
+  anim.current = rand.Intn(anim.maxFrame * anim.msPerFrame)
 }
