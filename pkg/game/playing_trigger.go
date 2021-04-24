@@ -54,6 +54,12 @@ func enemyShotsAtMost(count int) func(*playing) bool {
   }
 }
 
+func enemiesAtMost(count int) func(*playing) bool {
+  return func(p *playing) bool {
+    return len(p.enemies) <= count
+  }
+}
+
 func timerFinished(name string) func(*playing) bool {
   return func(p *playing) bool {
     return p.timers.Finished(name)
