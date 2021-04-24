@@ -9,7 +9,7 @@ import (
 type game struct{
 	img *dom.Image
   output *dom.Context2D
-	scale int
+	scale *sharableInt
 
 	states map[string]state
 	currentStateID string
@@ -18,12 +18,13 @@ type game struct{
 func New(img *dom.Image) dominit.Game {
 	g := &game{
 		img: img,
-		scale: 1,
+		scale: &sharableInt{},
 		states: map[string]state{
 			"title": &title{},
 			"playing": &playing{},
 		},
 	}
+	g.scale.Set(1)
 	g.nextState("title")
 	return g
 }
@@ -60,10 +61,11 @@ func (g *game) SetOutput(ctx2d *dom.Context2D) {
 }
 
 func (g *game) Render() {
-	g.output.ClearRect(0, 0, gfxWidth*g.scale, gfxHeight*g.scale)
+	scale := g.scale.Get()
+	g.output.ClearRect(0, 0, gfxWidth*scale, gfxHeight*scale)
 	fillStyle, _ := dom.NewColorCanvasFillStyle("#111111")
 	g.output.SetFillStyle(fillStyle)
-	g.output.FillRect(0, 0, gfxWidth*g.scale, gfxHeight*g.scale)
+	g.output.FillRect(0, 0, gfxWidth*scale, gfxHeight*scale)
 }
 
 func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight int, scaleX, scaleY float64) {
@@ -75,7 +77,7 @@ func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight
   if f < 1 {
     f = 1
   }
-	g.scale = f
+	g.scale.Set(f)
 	return f*gfxWidth, f*gfxHeight, float64(f), float64(f)
 }
 
