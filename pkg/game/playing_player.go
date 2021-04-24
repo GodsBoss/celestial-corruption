@@ -20,10 +20,13 @@ type player struct {
   reload int
 
   health int
+
+  animation
 }
 
 func (p *player) Tick(ms int) {
   p.reload = max(p.reload - ms, 0)
+  p.animation.Tick(ms)
 }
 
 func (p *player) shoot() []shot {

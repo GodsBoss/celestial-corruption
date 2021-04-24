@@ -28,6 +28,10 @@ func (p *playing) init() {
       y: float64(gfxHeight) / 2 - p.playership.h / 2,
     },
     health: playerMaxHealth,
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
   }
   p.playerShots = []shot{}
   p.enemies = []enemy{
@@ -155,7 +159,7 @@ func (p *playing) renderable() renderable {
       p.spriteFactory.create("player_shot_1", int(p.playerShots[i].x), int(p.playerShots[i].y), 0),
     )
   }
-  result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), 0))
+  result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()))
   return result
 }
 
