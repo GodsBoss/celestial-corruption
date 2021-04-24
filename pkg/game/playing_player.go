@@ -23,11 +23,11 @@ type player struct {
 
   animation
 
-  speedControl playerControl
+  control playerControl
 }
 
 func (p *player) Tick(ms int) {
-  p.speedControl.setSpeed(p)
+  p.control.setSpeed(p)
   p.reload = max(p.reload - ms, 0)
   p.animation.Tick(ms)
   p.entity.Tick(ms)
@@ -46,8 +46,11 @@ func (p *player) Tick(ms int) {
   }
 }
 
-func (p *player) shoot() []shot {
+func (p *player) shots() []shot {
   if p.reload > 0 {
+    return nil
+  }
+  if !p.control.shouldShoot() {
     return nil
   }
   p.reload = playerReload
@@ -120,6 +123,10 @@ func (kc *keyboardControl) setSpeed(p *player) {
   p.dy = float64(dy) * pSpeed
 }
 
+func (kc *keyboardControl) shouldShoot() bool {
+  return kc.shoot
+}
+
 // Position of the player's ship in cinematics.
 const (
   cinematicPlayerX = 50.0
@@ -142,6 +149,11 @@ func (cc *cinematicControl) setSpeed(p *player) {
   p.dy = pSpeed * (targetY - p.y) / d
 }
 
+func (cc *cinematicControl) shouldShoot() bool {
+  return false
+}
+
 type playerControl interface {
   setSpeed(p *player)
+  shouldShoot() bool
 }
