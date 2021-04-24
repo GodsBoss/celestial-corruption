@@ -8,6 +8,9 @@ type animation struct {
 }
 
 func (anim *animation) Tick(ms int) {
+  if anim.maxFrame == 0 {
+    return
+  }
   anim.current += ms
   if anim.Frame() > anim.maxFrame {
     anim.current -= anim.Frame() * anim.msPerFrame
@@ -15,5 +18,8 @@ func (anim *animation) Tick(ms int) {
 }
 
 func (anim *animation) Frame() int {
+  if anim.maxFrame == 0 {
+    return 0
+  }
   return anim.current / anim.msPerFrame
 }
