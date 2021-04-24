@@ -9,10 +9,13 @@ type enemy struct {
 
   // ramDamage is the damage dealt if the enemy collides with the player.
   ramDamage int
+
+  animation
 }
 
 func (e *enemy) Tick(ms int) {
   e.entity.Tick(ms)
+  e.animation.Tick(ms)
 }
 
 func (e *enemy) Alive() bool {

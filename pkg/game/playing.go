@@ -46,6 +46,10 @@ func (p *playing) init() {
       health: 1000,
       Type: "1",
       ramDamage: 800,
+      animation: animation{
+        maxFrame: 3,
+        msPerFrame: 100,
+      },
     },
     {
       entity: entity{
@@ -57,6 +61,10 @@ func (p *playing) init() {
       health: 1000,
       Type: "2",
       ramDamage: 800,
+      animation: animation{
+        maxFrame: 3,
+        msPerFrame: 100,
+      },
     },
   }
 }
@@ -133,7 +141,7 @@ func (p *playing) renderable() renderable {
   for i := range p.enemies {
     result = append(
       result,
-      p.spriteFactory.create("enemy_"+ p.enemies[i].Type, int(p.enemies[i].x), int(p.enemies[i].y), 0),
+      p.spriteFactory.create("enemy_"+ p.enemies[i].Type, int(p.enemies[i].x), int(p.enemies[i].y), p.enemies[i].Frame()),
     )
   }
   for i := range p.playerShots {
