@@ -35,7 +35,7 @@ func init() {
           []enemy{
             {
               Type: "practice",
-              health: 1000,
+              health: 1,
               ramDamage: 1000000, // These guys are *strong*.
               entity: entity{
                 x: 250,
@@ -47,7 +47,7 @@ func init() {
             },
             {
               Type: "practice",
-              health: 1000,
+              health: 1,
               ramDamage: 1000000,
               entity: entity{
                 x: 270,
@@ -59,7 +59,7 @@ func init() {
             },
             {
               Type: "practice",
-              health: 1000,
+              health: 1,
               ramDamage: 1000000,
               entity: entity{
                 x: 220,
@@ -130,7 +130,51 @@ func init() {
         killedAtLeast("1", 2),
         killedAtLeast("2", 2),
       ),
-      doRemoveTrigger("spawn_first_wave"),
+      multipleDos(
+        doRemoveTrigger("spawn_first_wave"),
+        doAddTrigger("wait_for_first_wave_end"),
+      ),
+    ),
+    "wait_for_first_wave_end": newConditionalTrigger(
+      allOf(
+        enemiesAtMost(0),
+        enemyShotsAtMost(0),
+      ),
+      multipleDos(
+        doSetCinematicControl(),
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "starting_orders_1",
+            contents: lines(
+              "Welcome to the Quantum Bomb Laboratories.",
+              "Sorry that you had such a rough journey.",
+              "The Quantum Bomb 9001 is already",
+              "attached to your ship.",
+            ),
+          },
+        ),
+        doAddTrigger("wait_for_q_bomb_labs_msg_fading"),
+      ),
+    ),
+    "wait_for_q_bomb_labs_msg_fading": newConditionalTrigger(
+      invertCheck(showsMessage()),
+      multipleDos(
+        doSetKeyboardControl(),
+        doSetQBomb(true),
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "starting_orders_2",
+            contents: lines(
+              "You can now proceed. We will send you",
+              "additional valuable information while",
+              "you penetrate deeper into enemy",
+              "territory. Take care!",
+            ),
+          },
+        ),
+      ),
     ),
   }
   for tID := range pTriggers {
@@ -155,7 +199,7 @@ func spawnEnemy1() enemy {
       speed: 50.0,
       switchTargetInterval: seconds(1),
     },
-    health: 500,
+    health: 1,
     ramDamage: 100,
   }
 }
@@ -177,7 +221,7 @@ func spawnEnemy2() enemy {
       speed: 40.0,
       switchTargetInterval: seconds(2),
     },
-    health: 800,
+    health: 1,
     ramDamage: 200,
   }
 }
