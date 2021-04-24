@@ -10,22 +10,48 @@ type game struct{
 	img *dom.Image
   output *dom.Context2D
 	scale int
+
+	states map[string]state
+	currentStateID string
 }
 
 func New(img *dom.Image) dominit.Game {
-	return &game{
+	g := &game{
 		img: img,
 		scale: 1,
+		states: map[string]state{
+			"title": &title{},
+			"playing": &playing{},
+		},
 	}
+	g.nextState("title")
+	return g
+}
+
+// nextState switches the state. Does nothing if id is an empty string.
+func (g *game) nextState(id string) {
+	if id == "" {
+		return
+	}
+	g.currentStateID = id
+	g.states[id].init()
+}
+
+func (g *game) currentState() state {
+	return g.states[g.currentStateID]
 }
 
 func (g *game) TicksPerSecond() int {
 	return tps
 }
 
-func (g *game) Tick(ms int) {}
+func (g *game) Tick(ms int) {
+	g.nextState(g.currentState().tick(ms))
+}
 
-func (g *game) ReceiveKeyEvent(event interaction.KeyEvent) {}
+func (g *game) ReceiveKeyEvent(event interaction.KeyEvent) {
+	g.nextState(g.currentState().receiveKeyEvent(event))
+}
 
 func (g *game) ReceiveMouseEvent(event interaction.MouseEvent) {}
 
