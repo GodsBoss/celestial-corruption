@@ -67,6 +67,7 @@ func (g *game) ReceiveKeyEvent(event interaction.KeyEvent) {
 func (g *game) ReceiveMouseEvent(event interaction.MouseEvent) {}
 
 func (g *game) SetOutput(ctx2d *dom.Context2D) {
+	ctx2d.DisableImageSmoothing()
   g.output = ctx2d
 }
 
