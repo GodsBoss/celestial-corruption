@@ -48,6 +48,12 @@ func killedAtLeast(typ string, count int) func(*playing) bool {
   }
 }
 
+func timerFinished(name string) func(*playing) bool {
+  return func(p *playing) bool {
+    return p.timers.Finished(name)
+  }
+}
+
 func multipleDos(dos ...func(*playing)) func(*playing) {
   return func(p *playing) {
     for i := range dos {
@@ -71,5 +77,11 @@ func doAddTriggerFromMap(name string, m map[string]trigger) func(*playing) {
 func doAddEnemies(enemies []enemy) func(*playing){
   return func(p *playing) {
     p.enemies = append(p.enemies, enemies...)
+  }
+}
+
+func doSetTimer(name string, duration int) func(*playing) {
+  return func(p *playing) {
+    p.timers.Set(name, duration)
   }
 }
