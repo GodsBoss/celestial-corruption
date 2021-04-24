@@ -36,3 +36,9 @@ type enemyControl interface {
 type nopEnemyControl struct{}
 
 func (ctrl nopEnemyControl) control(_ *enemy) {}
+
+type enemyControlFunc func(*enemy)
+
+func (f enemyControlFunc) control(e *enemy) {
+  f(e)
+}
