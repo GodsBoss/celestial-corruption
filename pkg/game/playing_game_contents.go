@@ -174,7 +174,73 @@ func init() {
             ),
           },
         ),
+        doAddTrigger("spawn_aliens"),
+        doAddTrigger("stop_alien_spawn"),
       ),
+    ),
+    "spawn_aliens": &randomSpawner{
+      spawnInterval: seconds(1),
+      spawn: spawnOneEnemyTypeRandomly(spawnEnemyAlien, spawnEnemyBrainy),
+      maxEnemies: 10,
+    },
+    "stop_alien_spawn": newConditionalTrigger(
+      allOf(
+        killedAtLeast("alien", 2),
+        killedAtLeast("brainy", 2),
+      ),
+      multipleDos(
+        doRemoveTrigger("spawn_aliens"),
+        doAddTrigger("spawn_nightmares"),
+        doAddTrigger("stop_nightmare_spawn"),
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "starting_orders_2",
+            contents: lines(
+              "Aliens defeated,",
+              "Nightmare ahead!",
+            ),
+          },
+        ),
+      ),
+    ),
+    "spawn_nightmares": &randomSpawner{
+      spawnInterval: seconds(1),
+      spawn: spawnOneEnemyTypeRandomly(spawnEnemyNightmare1, spawnEnemyNightmare2),
+      maxEnemies: 10,
+    },
+    "stop_nightmare_spawn": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 2),
+        killedAtLeast("nightmare_2", 2),
+      ),
+      multipleDos(
+        doRemoveTrigger("spawn_aliens"),
+        doAddTrigger("spawn_corrupted_earth_forces"),
+        doAddTrigger("end_the_game"),
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "starting_orders_2",
+            contents: lines(
+              "Nightmares defeated,",
+              "Corrupted Earth Forces ahead!",
+            ),
+          },
+        ),
+      ),
+    ),
+    "spawn_corrupted_earth_forces": &randomSpawner{
+      spawnInterval: seconds(1),
+      spawn: spawnOneEnemyTypeRandomly(spawnEnemyCorruptedEarthForces1, spawnEnemyCorruptedEarthForces2),
+      maxEnemies: 10,
+    },
+    "end_the_game": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 2),
+        killedAtLeast("nightmare_2", 2),
+      ),
+      multipleDos(),
     ),
   }
   for tID := range pTriggers {
