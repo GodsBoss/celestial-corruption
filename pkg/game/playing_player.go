@@ -42,8 +42,8 @@ func (p *player) shoot() []shot {
         y: y,
         w: 4,
         h: 4,
+        dx: 200.0,
       },
-      speedX: 200.0,
       power: 100,
     },
   }

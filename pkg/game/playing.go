@@ -174,13 +174,10 @@ type shot struct {
   // power is the shot's strength. A higher value means less successful hits are
   // necessary before destroying enemies.
   power int
-
-  speedX float64
-  speedY float64
 }
 
 func (sh *shot) Tick(ms int) {
-  sh.x += normalizedSpeed(sh.speedX, ms)
+  sh.entity.Tick(ms)
 }
 
 func (sh *shot) Gone() bool {

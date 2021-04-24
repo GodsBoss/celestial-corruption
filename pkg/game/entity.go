@@ -9,6 +9,14 @@ type entity struct {
   y float64
   w float64
   h float64
+
+  dx float64
+  dy float64
+}
+
+func (e *entity) Tick(ms int) {
+  e.x += normalizedSpeed(e.dx, ms)
+  e.y += normalizedSpeed(e.dy, ms)
 }
 
 func (e entity) Left() float64 {
