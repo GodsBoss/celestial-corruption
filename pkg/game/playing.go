@@ -1,6 +1,7 @@
 package game
 
 import (
+  "fmt"
   "math"
 
   "github.com/GodsBoss/gggg/pkg/interaction"
@@ -19,11 +20,36 @@ func (p *playing) init() {
   p.playerControls = playerControls{}
   p.playership.w = 36
   p.playership.h = 12
+  p.playership.x = 20
+  p.playership.y =float64(gfxHeight) / 2 - p.playership.h / 2
 }
 
 func (p *playing) tick(ms int)  (next string) {
+  fmt.Println(ms)
+  dx, dy := p.playerControls.combined()
+  pSpeed := playerSpeed * float64(ms) / 1000.0
+  if dx != 0 && dy != 0 {
+    pSpeed = pSpeed / playerSpeedDiagonalFactor
+  }
+  p.playership.x += float64(dx) * pSpeed
+  p.playership.y += float64(dy) * pSpeed
+
+  if p.playership.x < 5 {
+    p.playership.x = 5
+  }
+  if p.playership.x > float64(gfxWidth - int(p.playership.w) - 5) {
+    p.playership.x = float64(gfxWidth - int(p.playership.w) - 5)
+  }
+  if p.playership.y < 5 {
+    p.playership.y = 5
+  }
+  if p.playership.y > float64(gfxHeight - int(p.playership.h) - 5) {
+    p.playership.y = float64(gfxHeight - int(p.playership.h) - 5)
+  }
   return ""
 }
+
+var playerSpeedDiagonalFactor = math.Sqrt(2.0)
 
 func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
   if event.Key == "t" {
@@ -70,6 +96,15 @@ func (pc *playerControls) setByKey(key string, value bool) {
   case " ":
     pc.shoot = value
   }
+}
+
+func (pc *playerControls) combined() (int, int) {
+  return boolInts[pc.right] - boolInts[pc.left], boolInts[pc.down] - boolInts[pc.up]
+}
+
+var boolInts = map[bool]int{
+  false: 0,
+  true: 1,
 }
 
 type entity struct {
@@ -125,3 +160,8 @@ func entityCollision(e1, e2 entity) (entity, bool) {
     h: math.Min(bottom.Bottom(), top.Bottom()),
   }, true
 }
+
+const (
+  // playerSpeed is the speed of the player in in-game pixels per second.
+  playerSpeed = 100.0
+)
