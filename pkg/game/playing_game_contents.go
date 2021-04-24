@@ -272,7 +272,7 @@ func spawnEnemy1() enemy {
       h: 24,
     },
     animation: animation{
-      maxFrame: 3,
+      maxFrame: 7,
       msPerFrame: 100,
     },
     control: &randomMovement{
