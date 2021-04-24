@@ -1,5 +1,9 @@
 package game
 
+import (
+  "math/rand"
+)
+
 // enemy is a simple enemy, e.g. a ship, flying brain, etc.
 type enemy struct {
   entity
@@ -44,5 +48,29 @@ func (f enemyControlFunc) control(ms int, e *enemy) {
 }
 
 type randomMovement struct {
+  targetX float64
+  targetY float64
+  speed float64
 
+  waitForNextTarget int
+  switchTargetInterval int
+}
+
+func (mv *randomMovement) control(ms int, e *enemy) {
+  mv.waitForNextTarget -= ms
+
+  if mv.waitForNextTarget <= 0 {
+    mv.waitForNextTarget += mv.switchTargetInterval
+    mv.targetX, mv.targetY = rand.Float64() * float64(gfxWidth), rand.Float64() * float64(gfxHeight)
+  }
+
+  e.dx = 0
+  e.dy = 0
+
+  d := distance(mv.targetX, mv.targetY, e.x, e.y)
+
+  if d > 0.1 {
+    e.dx = (mv.targetX - e.x) * mv.speed / d
+    e.dy = (mv.targetY - e.y) * mv.speed / d
+  }
 }

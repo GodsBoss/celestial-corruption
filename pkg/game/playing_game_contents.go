@@ -1,5 +1,9 @@
 package game
 
+import (
+  "math/rand"
+)
+
 var playingTriggers map[string]trigger = make(map[string]trigger)
 
 func init() {
@@ -91,7 +95,7 @@ func init() {
             ),
           },
         ),
-        doSetTimer("starting_orders_1", seconds(12)),
+        doSetTimer("starting_orders_1", seconds(1)),
         doAddTrigger("starting_orders_2"),
       ),
     ),
@@ -101,7 +105,7 @@ func init() {
         doRemoveTimer("starting_orders_1"),
         doSetMessage(
           &message{
-            duration: seconds(12),
+            duration: seconds(1),
             imageID: "starting_orders_2",
             contents: lines(
               "They developed a revolutionary weapon,",
@@ -112,11 +116,39 @@ func init() {
             ),
           },
         ),
+        doAddTrigger("spawn_first_wave"),
       ),
     ),
+    "spawn_first_wave": &randomSpawner{
+      spawnInterval: seconds(1),
+      spawn: spawnEnemy1,
+      maxEnemies: 10,
+    },
   }
   for tID := range pTriggers {
     playingTriggers[tID] = pTriggers[tID]
+  }
+}
+
+func spawnEnemy1() enemy {
+  return enemy{
+    Type: "1",
+    entity: entity {
+      x: 330,
+      y: rand.Float64() * float64(gfxHeight),
+      w: 24,
+      h: 24,
+    },
+    animation: animation{
+      maxFrame: 3,
+      msPerFrame: 100,
+    },
+    control: &randomMovement{
+      speed: 50.0,
+      switchTargetInterval: seconds(1),
+    },
+    health: 500,
+    ramDamage: 100,
   }
 }
 
