@@ -19,6 +19,12 @@ var spriteInfos = map[string]spriteInfo{
     w: 320,
     h: 200,
   },
+  "bg_epilog": {
+    x: 640,
+    y: 600,
+    w: 320,
+    h: 200,
+  },
   "player_ship": {
     x: 2,
     y: 2,
