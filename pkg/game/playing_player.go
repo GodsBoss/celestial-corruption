@@ -23,7 +23,7 @@ type player struct {
 
   animation
 
-  speedControl playerSpeedControl
+  speedControl playerControl
 }
 
 func (p *player) Tick(ms int) {
@@ -74,7 +74,7 @@ func (p *player) Alive() bool {
   return p.health > 0
 }
 
-type playerControls struct {
+type keyboardControl struct {
   up bool
   down bool
   left bool
@@ -82,36 +82,36 @@ type playerControls struct {
   shoot bool
 }
 
-func (pc *playerControls) receiveKeyEvent(event interaction.KeyEvent) {
+func (kc *keyboardControl) receiveKeyEvent(event interaction.KeyEvent) {
   if event.Type == interaction.KeyUp {
-    pc.setByKey(event.Key, false)
+    kc.setByKey(event.Key, false)
   }
   if event.Type == interaction.KeyDown {
-    pc.setByKey(event.Key, true)
+    kc.setByKey(event.Key, true)
   }
 }
 
-func (pc *playerControls) setByKey(key string, value bool) {
+func (kc *keyboardControl) setByKey(key string, value bool) {
   switch key {
   case "w":
-    pc.up = value
+    kc.up = value
   case "s":
-    pc.down = value
+    kc.down = value
   case "a":
-    pc.left = value
+    kc.left = value
   case "d":
-    pc.right = value
+    kc.right = value
   case " ":
-    pc.shoot = value
+    kc.shoot = value
   }
 }
 
-func (pc *playerControls) combined() (int, int) {
-  return boolInts[pc.right] - boolInts[pc.left], boolInts[pc.down] - boolInts[pc.up]
+func (kc *keyboardControl) combined() (int, int) {
+  return boolInts[kc.right] - boolInts[kc.left], boolInts[kc.down] - boolInts[kc.up]
 }
 
-func (pc *playerControls) setSpeed(p *player) {
-  dx, dy := pc.combined()
+func (kc *keyboardControl) setSpeed(p *player) {
+  dx, dy := kc.combined()
   pSpeed := playerSpeed
   if dx != 0 && dy != 0 {
     pSpeed = pSpeed / playerSpeedDiagonalFactor
@@ -142,6 +142,6 @@ func (cc *cinematicControl) setSpeed(p *player) {
   p.dy = pSpeed * (targetY - p.y) / d
 }
 
-type playerSpeedControl interface {
+type playerControl interface {
   setSpeed(p *player)
 }

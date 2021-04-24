@@ -8,7 +8,7 @@ import (
 
 type playing struct {
   spriteFactory *spriteFactory
-  playerControls playerControls
+  keyboardControl keyboardControl
 
   playership player
   playerShots []shot
@@ -19,7 +19,7 @@ type playing struct {
 var _ state = &playing{}
 
 func (p *playing) init() {
-  p.playerControls = playerControls{}
+  p.keyboardControl = keyboardControl{}
   p.playership = player{
     entity: entity{
       w: 36,
@@ -32,7 +32,7 @@ func (p *playing) init() {
       maxFrame: 3,
       msPerFrame: 100,
     },
-    speedControl: &p.playerControls,
+    speedControl: &p.keyboardControl,
   }
   p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
   p.playerShots = []shot{}
@@ -118,7 +118,7 @@ func (p *playing) tick(ms int)  (next string) {
     return "game_over"
   }
 
-  if p.playerControls.shoot {
+  if p.keyboardControl.shoot {
     p.playerShots = append(p.playerShots, p.playership.shoot()...)
   }
 
@@ -131,7 +131,7 @@ func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
   if event.Key == "t" {
     return "title"
   }
-  p.playerControls.receiveKeyEvent(event)
+  p.keyboardControl.receiveKeyEvent(event)
   return ""
 }
 
