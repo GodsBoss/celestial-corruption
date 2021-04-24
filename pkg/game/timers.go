@@ -8,7 +8,8 @@ func (t timers) Tick(ms int) {
   }
 }
 
-func (t timers) Add(name string, duration int) {
+// Set both adds and re-sets timers.
+func (t timers) Set(name string, duration int) {
   t[name] = duration
 }
 
