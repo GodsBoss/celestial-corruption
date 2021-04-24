@@ -141,42 +141,6 @@ func (p *playing) renderable() renderable {
   return result
 }
 
-type playerControls struct {
-  up bool
-  down bool
-  left bool
-  right bool
-  shoot bool
-}
-
-func (pc *playerControls) receiveKeyEvent(event interaction.KeyEvent) {
-  if event.Type == interaction.KeyUp {
-    pc.setByKey(event.Key, false)
-  }
-  if event.Type == interaction.KeyDown {
-    pc.setByKey(event.Key, true)
-  }
-}
-
-func (pc *playerControls) setByKey(key string, value bool) {
-  switch key {
-  case "w":
-    pc.up = value
-  case "s":
-    pc.down = value
-  case "a":
-    pc.left = value
-  case "d":
-    pc.right = value
-  case " ":
-    pc.shoot = value
-  }
-}
-
-func (pc *playerControls) combined() (int, int) {
-  return boolInts[pc.right] - boolInts[pc.left], boolInts[pc.down] - boolInts[pc.up]
-}
-
 var boolInts = map[bool]int{
   false: 0,
   true: 1,
