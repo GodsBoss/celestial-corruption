@@ -15,6 +15,8 @@ type playing struct {
 
   enemies []enemy
 
+  enemyShots []shot
+
   message *message
 
   triggers []trigger
@@ -52,6 +54,7 @@ func (p *playing) init() {
 
   p.playerShots = nil
   p.enemies = nil
+  p.enemyShots = nil
   p.message = nil
   p.triggers = []trigger{
     playingTriggers["init"],
