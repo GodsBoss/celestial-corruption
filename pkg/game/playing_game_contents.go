@@ -39,6 +39,7 @@ func init() {
                 w: 24,
                 h: 24,
               },
+              control: nopEnemyControl{},
             },
             {
               Type: "practice",
@@ -50,6 +51,7 @@ func init() {
                 w: 24,
                 h: 24,
               },
+              control: nopEnemyControl{},
             },
             {
               Type: "practice",
@@ -61,6 +63,7 @@ func init() {
                 w: 24,
                 h: 24,
               },
+              control: nopEnemyControl{},
             },
           },
         ),

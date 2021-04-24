@@ -11,9 +11,12 @@ type enemy struct {
   ramDamage int
 
   animation
+
+  control enemyControl
 }
 
 func (e *enemy) Tick(ms int) {
+  e.control.control(e)
   e.entity.Tick(ms)
   e.animation.Tick(ms)
 }
@@ -21,3 +24,11 @@ func (e *enemy) Tick(ms int) {
 func (e *enemy) Alive() bool {
   return e.health > 0
 }
+
+type enemyControl interface {
+  control(*enemy)
+}
+
+type nopEnemyControl struct{}
+
+func (ctrl nopEnemyControl) control(_ *enemy) {}
