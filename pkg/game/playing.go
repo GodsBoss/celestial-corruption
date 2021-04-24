@@ -36,38 +36,7 @@ func (p *playing) init() {
   }
   p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
   p.playerShots = []shot{}
-  p.enemies = []enemy{
-    {
-      entity: entity{
-        x: 200,
-        y: 50,
-        w: 24,
-        h: 24,
-      },
-      health: 1000,
-      Type: "1",
-      ramDamage: 800,
-      animation: animation{
-        maxFrame: 3,
-        msPerFrame: 100,
-      },
-    },
-    {
-      entity: entity{
-        x: 180,
-        y: 150,
-        w: 24,
-        h: 24,
-      },
-      health: 1000,
-      Type: "2",
-      ramDamage: 800,
-      animation: animation{
-        maxFrame: 3,
-        msPerFrame: 100,
-      },
-    },
-  }
+  p.enemies = []enemy{}
 }
 
 func (p *playing) tick(ms int)  (next string) {
@@ -110,9 +79,6 @@ func (p *playing) tick(ms int)  (next string) {
     }
   }
   p.enemies = newEnemies
-  if len(p.enemies) == 0 {
-    p.playership.control = &cinematicControl{}
-  }
 
   if !p.playership.Alive() {
     return "game_over"
