@@ -12,5 +12,5 @@ type state interface {
 
   receiveKeyEvent(event interaction.KeyEvent) (next string)
 
-  sprites() renderable
+  renderables() renderable
 }
