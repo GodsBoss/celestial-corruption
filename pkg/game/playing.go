@@ -1,7 +1,6 @@
 package game
 
 import (
-  "fmt"
   "math"
 
   "github.com/GodsBoss/gggg/pkg/interaction"
@@ -37,7 +36,6 @@ func (p *playing) tick(ms int)  (next string) {
   }
   p.playerShots = newShots
 
-  fmt.Println(ms)
   dx, dy := p.playerControls.combined()
   pSpeed := normalizedSpeed(playerSpeed, ms)
   if dx != 0 && dy != 0 {
