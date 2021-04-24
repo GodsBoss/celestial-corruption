@@ -27,6 +27,7 @@ type player struct {
 func (p *player) Tick(ms int) {
   p.reload = max(p.reload - ms, 0)
   p.animation.Tick(ms)
+  p.entity.Tick(ms)
 }
 
 func (p *player) shoot() []shot {

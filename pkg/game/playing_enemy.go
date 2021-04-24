@@ -11,7 +11,9 @@ type enemy struct {
   ramDamage int
 }
 
-func (e *enemy) Tick(ms int) {}
+func (e *enemy) Tick(ms int) {
+  e.entity.Tick(ms)
+}
 
 func (e *enemy) Alive() bool {
   return e.health > 0
