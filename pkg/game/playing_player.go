@@ -69,6 +69,7 @@ func (p *player) shots() []shot {
         maxFrame: 3,
         msPerFrame: 50,
       },
+      control: nopShotControl{},
     },
   }
 }
