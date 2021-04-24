@@ -85,3 +85,9 @@ func doSetTimer(name string, duration int) func(*playing) {
     p.timers.Set(name, duration)
   }
 }
+
+func doRemoveTimer(name string) func(*playing) {
+  return func(p *playing) {
+    p.timers.Remove(name)
+  }
+}
