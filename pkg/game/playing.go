@@ -1,6 +1,8 @@
 package game
 
 import (
+  "math"
+
   "github.com/GodsBoss/gggg/pkg/interaction"
 )
 
@@ -33,7 +35,7 @@ func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
 
 func (p *playing) renderable() renderable {
   return renderables{
-    p.spriteFactory.create("player_ship", p.playership.x, p.playership.y, 0),
+    p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), 0),
     p.spriteFactory.create("bg_playing", 0, 0, 0),
   }
 }
@@ -71,29 +73,29 @@ func (pc *playerControls) setByKey(key string, value bool) {
 }
 
 type entity struct {
-  x int
-  y int
-  w int
-  h int
+  x float64
+  y float64
+  w float64
+  h float64
 }
 
-func (e entity) Left() int {
+func (e entity) Left() float64 {
   return e.x
 }
 
-func (e entity) Right() int {
+func (e entity) Right() float64 {
   return e.x + e.w
 }
 
-func (e entity) Top() int {
+func (e entity) Top() float64 {
   return e.y
 }
 
-func (e entity) Bottom() int {
+func (e entity) Bottom() float64 {
   return e.y + e.h
 }
 
-func (e entity) Center() (x, y int) {
+func (e entity) Center() (x, y float64) {
   return e.x + (e.w / 2), e.y + (e.h / 2)
 }
 
@@ -119,7 +121,7 @@ func entityCollision(e1, e2 entity) (entity, bool) {
   return entity{
     x: right.x,
     y: bottom.y,
-    w: min(right.Right(), left.Right()),
-    h: min(bottom.Bottom(), top.Bottom()),
+    w: math.Min(right.Right(), left.Right()),
+    h: math.Min(bottom.Bottom(), top.Bottom()),
   }, true
 }
