@@ -97,5 +97,5 @@ const (
   gfxWidth int = 320
   gfxHeight int = 200
 
-	tps = 40
+	tps = 100
 )
