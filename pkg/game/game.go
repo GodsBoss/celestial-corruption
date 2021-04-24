@@ -44,7 +44,7 @@ func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight
   if f < 1 {
     f = 1
   }
-	g.scale = 1
+	g.scale = f
 	return f*gfxWidth, f*gfxHeight, float64(f), float64(f)
 }
 
