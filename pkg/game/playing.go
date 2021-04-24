@@ -14,6 +14,8 @@ type playing struct {
   playerShots []shot
 
   enemies []enemy
+
+  message *message
 }
 
 var _ state = &playing{}
@@ -36,6 +38,14 @@ func (p *playing) init() {
   }
   p.playership.y = float64(gfxHeight) / 2 - p.playership.h / 2
   p.playerShots = []shot{}
+  p.message = &message{
+    duration: 5000,
+    imageID: "test",
+    imageAnimation: animation {
+      maxFrame: 1,
+      msPerFrame: 250,
+    },
+  }
   p.enemies = []enemy{}
 }
 
@@ -44,6 +54,7 @@ func (p *playing) tick(ms int)  (next string) {
   p.removeGoneShots()
   p.handleEnemyShotCollisions()
   p.handleEnemyPlayerCollisions()
+  p.removeOverMessage()
 
   if !p.playership.Alive() {
     return "game_over"
@@ -62,6 +73,7 @@ func (p *playing) tickAll(ms int) {
   for i := range p.enemies {
     p.enemies[i].Tick(ms)
   }
+  p.message.Tick(ms)
 }
 
 func (p *playing) removeGoneShots() {
@@ -106,6 +118,12 @@ func (p *playing) handleEnemyPlayerCollisions() {
   p.enemies = newEnemies
 }
 
+func (p *playing) removeOverMessage() {
+  if p.message.Over() {
+    p.message = nil
+  }
+}
+
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)
 
 func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
@@ -133,6 +151,9 @@ func (p *playing) renderable() renderable {
     )
   }
   result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()))
+  if p.message != nil {
+    result = append(result, p.message.renderable(p.spriteFactory))
+  }
   return result
 }
 
