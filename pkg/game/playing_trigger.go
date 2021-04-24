@@ -16,12 +16,19 @@ type conditionalTrigger struct {
   do func(*playing)
 }
 
-func (t *conditionalTrigger) run(p *playing) (keep bool) {
+func newConditionalTrigger(check func(*playing) bool, do func(*playing)) trigger {
+  return conditionalTrigger{
+    check: check,
+    do: do,
+  }
+}
+
+func (t conditionalTrigger) run(p *playing) (keep bool) {
   if t.check(p) {
     t.do(p)
-    return true
+    return false
   }
-  return false
+  return true
 }
 
 func constCheckFunc(b bool) func(*playing) bool {
@@ -35,5 +42,11 @@ func multipleDos(dos ...func(*playing)) func(*playing) {
     for i := range dos {
       dos[i](p)
     }
+  }
+}
+
+func doSetMessage(msg *message) func(*playing) {
+  return func(p *playing) {
+    p.message = msg
   }
 }
