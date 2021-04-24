@@ -64,6 +64,7 @@ func (p *player) shots() []shot {
   anim.Randomize()
   return []shot{
     {
+      Type: "player",
       entity: entity{
         x: p.Right(),
         y: y,

@@ -1,6 +1,8 @@
 package game
 
 type shot struct {
+  Type string
+
   entity
 
   // power is the shot's strength. A higher value means less successful hits are
@@ -19,7 +21,7 @@ func (sh *shot) Tick(ms int) {
 }
 
 func (sh *shot) Gone() bool {
-  return sh.x > float64(gfxWidth)+10
+  return (sh.dx > 0 && sh.x > float64(gfxWidth)+10) || (sh.dy > 0 && sh.y > float64(gfxHeight)) || (sh.dx < 0 && sh.x < 0) || (sh.dy < 0 && sh.y < 0)
 }
 
 type shotControl interface {

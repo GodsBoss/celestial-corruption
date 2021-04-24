@@ -74,6 +74,7 @@ func (p *playing) tick(ms int)  (next string) {
   p.tickAll(ms)
   p.removeGoneShots()
   p.handleEnemyShotCollisions()
+  p.handlePlayerShotCollisions()
   p.handleEnemyPlayerCollisions()
   p.removeOverMessage()
 
@@ -91,6 +92,9 @@ func (p *playing) tickAll(ms int) {
   }
   for i := range p.enemies {
     p.enemies[i].Tick(ms)
+  }
+  for i := range p.enemyShots {
+    p.enemyShots[i].Tick(ms)
   }
   p.message.Tick(ms)
   p.timers.Tick(ms)
@@ -125,6 +129,18 @@ func (p *playing) handleEnemyShotCollisions() {
     }
   }
   p.enemies = newEnemies
+}
+
+func (p *playing) handlePlayerShotCollisions() {
+  newEnemyShots := make([]shot, 0)
+  for i := range p.enemyShots {
+    if _, collision := entityCollision(p.enemyShots[i].entity, p.playership.entity); collision {
+      p.playership.health = max(0, p.playership.health - p.enemyShots[i].power)
+    } else {
+      newEnemyShots = append(newEnemyShots, p.enemyShots[i])
+    }
+  }
+  p.enemyShots = newEnemyShots
 }
 
 func (p *playing) handleEnemyPlayerCollisions() {
@@ -197,7 +213,13 @@ func (p *playing) renderable() renderable {
   for i := range p.playerShots {
     result = append(
       result,
-      p.spriteFactory.create("player_shot_1", int(p.playerShots[i].x), int(p.playerShots[i].y), p.playerShots[i].Frame()),
+      p.spriteFactory.create(p.playerShots[i].Type + "_shot", int(p.playerShots[i].x), int(p.playerShots[i].y), p.playerShots[i].Frame()),
+    )
+  }
+  for i := range p.enemyShots {
+    result = append(
+      result,
+      p.spriteFactory.create(p.enemyShots[i].Type + "_shot", int(p.enemyShots[i].x), int(p.enemyShots[i].y), p.enemyShots[i].Frame()),
     )
   }
   result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()))

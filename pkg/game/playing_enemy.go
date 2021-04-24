@@ -74,3 +74,46 @@ func (mv *randomMovement) control(ms int, e *enemy) {
     e.dy = (mv.targetY - e.y) * mv.speed / d
   }
 }
+
+type wave1Shooter struct {
+  rm randomMovement
+
+  recovering int
+  loadingShot int
+  bulletSpeed float64
+}
+
+func (ws *wave1Shooter) control(ms int, e *enemy) {
+  if ws.recovering <= 0 {
+    ws.loadingShot -= ms
+    if ws.loadingShot < 0 {
+      ws.recovering = seconds(3)
+      ws.loadingShot = seconds(1)
+
+      cx, cy := e.Center()
+      d := distance(e.playing.playership.x, e.playing.playership.y, cx, cy)
+
+      e.playing.enemyShots = append(
+        e.playing.enemyShots,
+        shot{
+          Type: "enemy_2",
+          entity: entity{
+            x: cx - 4,
+            y: cy - 4,
+            dx: (e.playing.playership.x - cx + 4) * ws.bulletSpeed / d,
+            dy: (e.playing.playership.y - cy + 4) * ws.bulletSpeed / d,
+          },
+          power: 50,
+          animation: animation{
+            maxFrame: 3,
+            msPerFrame: 50,
+          },
+          control: nopShotControl{},
+        },
+      )
+    }
+    return
+  }
+  ws.recovering -= ms
+  ws.rm.control(ms, e)
+}

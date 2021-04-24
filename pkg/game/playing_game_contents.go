@@ -297,9 +297,12 @@ func spawnEnemy2() enemy {
       maxFrame: 3,
       msPerFrame: 100,
     },
-    control: &randomMovement{
-      speed: 40.0,
-      switchTargetInterval: seconds(2),
+    control: &wave1Shooter{
+      rm: randomMovement{
+        speed: 40.0,
+        switchTargetInterval: seconds(2),
+      },
+      bulletSpeed: 25,
     },
     health: 1,
     ramDamage: 200,
