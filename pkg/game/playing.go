@@ -18,6 +18,6 @@ func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
   return ""
 }
 
-func (p *playing) sprites() map[string]sprite {
-  return map[string]sprite{}
+func (p *playing) sprites() renderable {
+  return nopRenderable{}
 }

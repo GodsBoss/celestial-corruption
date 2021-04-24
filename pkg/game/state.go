@@ -12,12 +12,5 @@ type state interface {
 
   receiveKeyEvent(event interaction.KeyEvent) (next string)
 
-  sprites() map[string]sprite
-}
-
-type sprite interface {
-  ID() string
-  Frame() int
-  X() int
-  Y() int
+  sprites() renderable
 }

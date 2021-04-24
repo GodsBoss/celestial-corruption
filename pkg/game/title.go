@@ -18,6 +18,6 @@ func (t *title) receiveKeyEvent(event interaction.KeyEvent) (next string) {
   return ""
 }
 
-func (t *title) sprites() map[string]sprite {
-  return map[string]sprite{}
+func (t *title) sprites() renderable {
+  return nopRenderable{}
 }
