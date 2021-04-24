@@ -105,26 +105,7 @@ func (p *playing) tick(ms int)  (next string) {
     return "game_over"
   }
 
-  dx, dy := p.playerControls.combined()
-  pSpeed := normalizedSpeed(playerSpeed, ms)
-  if dx != 0 && dy != 0 {
-    pSpeed = pSpeed / playerSpeedDiagonalFactor
-  }
-  p.playership.x += float64(dx) * pSpeed
-  p.playership.y += float64(dy) * pSpeed
-
-  if p.playership.x < 5 {
-    p.playership.x = 5
-  }
-  if p.playership.x > float64(gfxWidth - int(p.playership.w) - 5) {
-    p.playership.x = float64(gfxWidth - int(p.playership.w) - 5)
-  }
-  if p.playership.y < 5 {
-    p.playership.y = 5
-  }
-  if p.playership.y > float64(gfxHeight - int(p.playership.h) - 5) {
-    p.playership.y = float64(gfxHeight - int(p.playership.h) - 5)
-  }
+  p.playerControls.setSpeed(&p.playership)
 
   if p.playerControls.shoot {
     p.playerShots = append(p.playerShots, p.playership.shoot()...)

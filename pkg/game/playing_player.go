@@ -28,6 +28,19 @@ func (p *player) Tick(ms int) {
   p.reload = max(p.reload - ms, 0)
   p.animation.Tick(ms)
   p.entity.Tick(ms)
+
+  if p.x < 5 {
+    p.x = 5
+  }
+  if p.x > float64(gfxWidth - int(p.w) - 5) {
+    p.x = float64(gfxWidth - int(p.w) - 5)
+  }
+  if p.y < 5 {
+    p.y = 5
+  }
+  if p.y > float64(gfxHeight - int(p.h) - 5) {
+    p.y = float64(gfxHeight - int(p.h) - 5)
+  }
 }
 
 func (p *player) shoot() []shot {
@@ -88,4 +101,14 @@ func (pc *playerControls) setByKey(key string, value bool) {
 
 func (pc *playerControls) combined() (int, int) {
   return boolInts[pc.right] - boolInts[pc.left], boolInts[pc.down] - boolInts[pc.up]
+}
+
+func (pc *playerControls) setSpeed(p *player) {
+  dx, dy := pc.combined()
+  pSpeed := playerSpeed
+  if dx != 0 && dy != 0 {
+    pSpeed = pSpeed / playerSpeedDiagonalFactor
+  }
+  p.dx = float64(dx) * pSpeed
+  p.dy = float64(dy) * pSpeed
 }
