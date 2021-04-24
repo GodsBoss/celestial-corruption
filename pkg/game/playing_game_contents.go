@@ -44,6 +44,10 @@ func init() {
                 h: 24,
               },
               control: nopEnemyControl{},
+              animation: animation{
+                maxFrame: 3,
+                msPerFrame: 145,
+              },
             },
             {
               Type: "practice",
@@ -56,6 +60,10 @@ func init() {
                 h: 24,
               },
               control: nopEnemyControl{},
+              animation: animation{
+                maxFrame: 3,
+                msPerFrame: 150,
+              },
             },
             {
               Type: "practice",
@@ -68,6 +76,10 @@ func init() {
                 h: 24,
               },
               control: nopEnemyControl{},
+              animation: animation{
+                maxFrame: 3,
+                msPerFrame: 155,
+              },
             },
           },
         ),
