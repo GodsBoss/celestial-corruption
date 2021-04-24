@@ -27,5 +27,18 @@ func (g *game) SetOutput(ctx2d *dom.Context2D) {}
 func (g *game) Render() {}
 
 func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight int, scaleX, scaleY float64) {
-	return 640, 400, 2, 2
+  wf, hf := (availableWidth - 20) / gfxWidth, (availableHeight - 20) / gfxHeight
+  f := wf
+  if hf < f {
+    f = hf
+  }
+  if f < 1 {
+    f = 1
+  }
+	return f*gfxWidth, f*gfxHeight, float64(f), float64(f)
 }
+
+const (
+  gfxWidth int = 320
+  gfxHeight int = 200
+)
