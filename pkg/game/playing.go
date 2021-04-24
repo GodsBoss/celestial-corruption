@@ -12,16 +12,45 @@ type playing struct {
 
   playership player
   playerShots []shot
+
+  enemies []enemy
 }
 
 var _ state = &playing{}
 
 func (p *playing) init() {
   p.playerControls = playerControls{}
-  p.playership.w = 36
-  p.playership.h = 12
-  p.playership.x = 20
-  p.playership.y =float64(gfxHeight) / 2 - p.playership.h / 2
+  p.playership = player{
+    entity: entity{
+      w: 36,
+      h: 12,
+      x: 20,
+      y: float64(gfxHeight) / 2 - p.playership.h / 2,
+    },
+  }
+
+  p.enemies = []enemy{
+    {
+      entity: entity{
+        x: 200,
+        y: 50,
+        w: 24,
+        h: 24,
+      },
+      health: 1000,
+      Type: "1",
+    },
+    {
+      entity: entity{
+        x: 180,
+        y: 150,
+        w: 24,
+        h: 24,
+      },
+      health: 1000,
+      Type: "2",
+    },
+  }
 }
 
 func (p *playing) tick(ms int)  (next string) {
@@ -35,6 +64,24 @@ func (p *playing) tick(ms int)  (next string) {
     }
   }
   p.playerShots = newShots
+
+  newEnemies := make([]enemy, 0)
+  for i := range p.enemies {
+    p.enemies[i].Tick(ms)
+    newShots := make([]shot, 0)
+    for j := range p.playerShots {
+      if _, collision := entityCollision(p.enemies[i].entity, p.playerShots[j].entity); collision {
+        p.enemies[i].health -= p.playerShots[j].power
+      } else {
+        newShots = append(newShots, p.playerShots[j])
+      }
+    }
+    p.playerShots = newShots
+    if p.enemies[i].Alive() {
+      newEnemies = append(newEnemies, p.enemies[i])
+    }
+  }
+  p.enemies = newEnemies
 
   dx, dy := p.playerControls.combined()
   pSpeed := normalizedSpeed(playerSpeed, ms)
@@ -78,6 +125,12 @@ func (p *playing) renderable() renderable {
   result := renderables{
     p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), 0),
     p.spriteFactory.create("bg_playing", 0, 0, 0),
+  }
+  for i := range p.enemies {
+    result = append(
+      result,
+      p.spriteFactory.create("enemy_"+ p.enemies[i].Type, int(p.enemies[i].x), int(p.enemies[i].y), 0),
+    )
   }
   for i := range p.playerShots {
     result = append(
@@ -185,6 +238,10 @@ func entityCollision(e1, e2 entity) (entity, bool) {
 
 type shot struct {
   entity
+
+  // power is the shot's strength. A higher value means less successful hits are
+  // necessary before destroying enemies.
+  power int
 
   speedX float64
   speedY float64
