@@ -42,6 +42,12 @@ var (
   never = constCheckFunc(false)
 )
 
+func killedAtLeast(typ string, count int) func(*playing) bool {
+  return func(p *playing) bool {
+    return p.kills[typ] >= count
+  }
+}
+
 func multipleDos(dos ...func(*playing)) func(*playing) {
   return func(p *playing) {
     for i := range dos {
