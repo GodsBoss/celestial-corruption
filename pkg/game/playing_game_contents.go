@@ -15,6 +15,7 @@ func init() {
               "Hello, commander! We don't have much time.",
               "Shoot the targets for practice!",
               "We continue when they are destroyed.",
+              "Do not touch them! They'll kill you.",
             ),
             imageAnimation: animation{
               maxFrame: 1,
