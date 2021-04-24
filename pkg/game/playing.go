@@ -182,6 +182,9 @@ func (p *playing) renderable() renderable {
     )
   }
   result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()))
+  if p.playership.hasQBomb {
+    result = append(result, p.spriteFactory.create("q_bomb", int(p.playership.x), int(p.playership.y), 0))
+  }
   if p.message != nil {
     result = append(result, p.message.renderable(p.spriteFactory))
   }

@@ -24,6 +24,8 @@ type player struct {
   animation
 
   control playerControl
+
+  hasQBomb bool
 }
 
 func (p *player) Tick(ms int) {
