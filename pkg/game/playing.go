@@ -18,11 +18,14 @@ type playing struct {
   message *message
 
   triggers []trigger
+
+  timers timers
 }
 
 var _ state = &playing{}
 
 func (p *playing) init() {
+  p.timers = make(timers)
   p.keyboardControl = keyboardControl{}
   p.playership = player{
     entity: entity{
@@ -82,6 +85,7 @@ func (p *playing) tickAll(ms int) {
     p.enemies[i].Tick(ms)
   }
   p.message.Tick(ms)
+  p.timers.Tick(ms)
 }
 
 func (p *playing) removeGoneShots() {
