@@ -13,6 +13,12 @@ func (t timers) Set(name string, duration int) {
   t[name] = duration
 }
 
+func (t timers) Remove(name string) {
+  if t.Exists(name) {
+    delete(t, name)
+  }
+}
+
 func (t timers) Exists(name string) bool {
   _, ok := t[name]
   return ok
