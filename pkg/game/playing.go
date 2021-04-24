@@ -76,3 +76,50 @@ type entity struct {
   w int
   h int
 }
+
+func (e entity) Left() int {
+  return e.x
+}
+
+func (e entity) Right() int {
+  return e.x + e.w
+}
+
+func (e entity) Top() int {
+  return e.y
+}
+
+func (e entity) Bottom() int {
+  return e.y + e.h
+}
+
+func (e entity) Center() (x, y int) {
+  return e.x + (e.w / 2), e.y + (e.h / 2)
+}
+
+func entityCollision(e1, e2 entity) (entity, bool) {
+  left, right := e1, e2
+  if left.x > right.x {
+    left, right = right, left
+  }
+
+  if right.Left() > left.Right() {
+    return entity{}, false
+  }
+
+  top, bottom := e1, e2
+  if top.y > bottom.y {
+    top, bottom = bottom, top
+  }
+
+  if bottom.Top() > top.Bottom() {
+    return entity{}, false
+  }
+
+  return entity{
+    x: right.x,
+    y: bottom.y,
+    w: min(right.Right(), left.Right()),
+    h: min(bottom.Bottom(), top.Bottom()),
+  }, true
+}
