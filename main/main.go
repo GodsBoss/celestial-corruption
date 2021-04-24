@@ -11,10 +11,19 @@ func main() {
   win, _ := dom.GlobalWindow()
   doc, _ := win.Document()
 
-  hint, _ := doc.GetElementByID("hint")
-  dom.RemoveNode(hint)
+  img, _ := doc.CreateImageElement("gfx.png")
+  img.On(
+    // Success
+    func(){
+      hint, _ := doc.GetElementByID("hint")
+      dom.RemoveNode(hint)
 
-  dominit.Run(game.New())
+      dominit.Run(game.New(img))
+    },
+
+    // Fail
+    func(err interface{}){},
+  )
 
   <-make(chan struct{}, 0)
 }

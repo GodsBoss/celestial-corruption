@@ -7,12 +7,14 @@ import (
 )
 
 type game struct{
+	img *dom.Image
   output *dom.Context2D
 	scale int
 }
 
-func New() dominit.Game {
+func New(img *dom.Image) dominit.Game {
 	return &game{
+		img: img,
 		scale: 1,
 	}
 }
