@@ -40,20 +40,43 @@ func (p *playing) init() {
 }
 
 func (p *playing) tick(ms int)  (next string) {
-  p.playership.Tick(ms)
+  p.tickAll(ms)
+  p.removeGoneShots()
+  p.handleEnemyShotCollisions()
+  p.handleEnemyPlayerCollisions()
 
-  newShots := make([]shot, 0)
+  if !p.playership.Alive() {
+    return "game_over"
+  }
+
+  p.playerShots = append(p.playerShots, p.playership.shots()...)
+
+  return ""
+}
+
+func (p *playing) tickAll(ms int) {
+  p.playership.Tick(ms)
   for i := range p.playerShots {
     p.playerShots[i].Tick(ms)
+  }
+  for i := range p.enemies {
+    p.enemies[i].Tick(ms)
+  }
+}
+
+func (p *playing) removeGoneShots() {
+  newShots := make([]shot, 0)
+  for i := range p.playerShots {
     if !p.playerShots[i].Gone() {
       newShots = append(newShots, p.playerShots[i])
     }
   }
   p.playerShots = newShots
+}
 
+func (p *playing) handleEnemyShotCollisions() {
   newEnemies := make([]enemy, 0)
   for i := range p.enemies {
-    p.enemies[i].Tick(ms)
     newShots := make([]shot, 0)
     for j := range p.playerShots {
       if _, collision := entityCollision(p.enemies[i].entity, p.playerShots[j].entity); collision {
@@ -68,8 +91,10 @@ func (p *playing) tick(ms int)  (next string) {
     }
   }
   p.enemies = newEnemies
+}
 
-  newEnemies = make([]enemy, 0)
+func (p *playing) handleEnemyPlayerCollisions() {
+  newEnemies := make([]enemy, 0)
   for i := range p.enemies {
     if _, collision := entityCollision(p.enemies[i].entity, p.playership.entity); collision {
       p.playership.health = max(0, p.playership.health - p.enemies[i].ramDamage)
@@ -79,14 +104,6 @@ func (p *playing) tick(ms int)  (next string) {
     }
   }
   p.enemies = newEnemies
-
-  if !p.playership.Alive() {
-    return "game_over"
-  }
-
-  p.playerShots = append(p.playerShots, p.playership.shots()...)
-
-  return ""
 }
 
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)
