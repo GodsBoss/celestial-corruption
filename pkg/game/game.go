@@ -8,10 +8,13 @@ import (
 
 type game struct{
   output *dom.Context2D
+	scale int
 }
 
 func New() dominit.Game {
-	return &game{}
+	return &game{
+		scale: 1,
+	}
 }
 
 func (g *game) TicksPerSecond() int {
@@ -39,6 +42,7 @@ func (g *game) Scale(availableWidth, availableHeight int) (realWidth, realHeight
   if f < 1 {
     f = 1
   }
+	g.scale = 1
 	return f*gfxWidth, f*gfxHeight, float64(f), float64(f)
 }
 
