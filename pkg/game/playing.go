@@ -97,6 +97,10 @@ func (p *playing) tick(ms int)  (next string) {
   }
   p.enemies = newEnemies
 
+  if !p.playership.Alive() {
+    return "game_over"
+  }
+
   dx, dy := p.playerControls.combined()
   pSpeed := normalizedSpeed(playerSpeed, ms)
   if dx != 0 && dy != 0 {

@@ -46,6 +46,10 @@ func (p *player) shoot() []shot {
   }
 }
 
+func (p *player) Alive() bool {
+  return p.health > 0
+}
+
 type playerControls struct {
   up bool
   down bool
