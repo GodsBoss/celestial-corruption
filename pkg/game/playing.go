@@ -19,12 +19,12 @@ type playing struct {
 
   message *message
 
-  triggers []trigger
+  triggers map[string]trigger
 
   // additionalTriggers are added to playing.triggers after the current triggers
   // have been processed. This avoids changing the triggers slice during its
   // iteration.
-  additionalTriggers []trigger
+  additionalTriggers map[string]trigger
 
   timers timers
 
@@ -58,10 +58,10 @@ func (p *playing) init() {
   p.enemies = nil
   p.enemyShots = nil
   p.message = nil
-  p.triggers = []trigger{
-    playingTriggers["init"],
+  p.triggers = map[string]trigger{
+    "init": playingTriggers["init"],
   }
-  p.additionalTriggers = nil
+  p.additionalTriggers = make(map[string]trigger)
   p.timers = make(timers)
   p.kills = make(map[string]int)
   p.nextState = ""
@@ -145,14 +145,17 @@ func (p *playing) removeOverMessage() {
 }
 
 func (p *playing) handleTriggers() {
-  leftOverTriggers := make([]trigger, 0)
-  for i := range p.triggers {
-    if p.triggers[i].run(p) {
-      leftOverTriggers = append(leftOverTriggers, p.triggers[i])
+  leftOverTriggers := make(map[string]trigger, 0)
+  for name := range p.triggers {
+    if p.triggers[name].run(p) {
+      leftOverTriggers[name] = p.triggers[name]
     }
   }
-  p.triggers = append(leftOverTriggers, p.additionalTriggers...)
-  p.additionalTriggers = nil
+  p.triggers = leftOverTriggers
+  for id := range p.additionalTriggers {
+    p.triggers[id] = p.additionalTriggers[id]
+  }
+  p.additionalTriggers = make(map[string]trigger)
 }
 
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)
