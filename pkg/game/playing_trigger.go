@@ -130,3 +130,9 @@ func doSetKeyboardControl() func(*playing) {
     p.playership.control = &p.keyboardControl
   }
 }
+
+func doSetQBomb(hasQBomb bool) func(*playing) {
+  return func(p *playing) {
+    p.playership.hasQBomb = hasQBomb
+  }
+}
