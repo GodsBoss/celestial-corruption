@@ -13,6 +13,10 @@ type enemy struct {
   animation
 
   control enemyControl
+
+  // playing is a back reference to the playing state. We need it so the control
+  // can utilize all of the state.
+  playing *playing
 }
 
 func (e *enemy) Tick(ms int) {

@@ -76,6 +76,9 @@ func doAddTriggerFromMap(name string, m map[string]trigger) func(*playing) {
 
 func doAddEnemies(enemies []enemy) func(*playing){
   return func(p *playing) {
+    for i := range enemies{
+      enemies[i].playing = p
+    }
     p.enemies = append(p.enemies, enemies...)
   }
 }
