@@ -1,7 +1,10 @@
 package main
 
 import (
+  "github.com/GodsBoss/celestial-corruption/pkg/game"
+
   "github.com/GodsBoss/gggg/pkg/dom"
+  "github.com/GodsBoss/gggg/pkg/dominit"
 )
 
 func main() {
@@ -11,8 +14,7 @@ func main() {
   hint, _ := doc.GetElementByID("hint")
   dom.RemoveNode(hint)
 
-  canvas, _ := doc.CreateCanvasElement()
-  canvas.SetSize(800, 600)
-  gameElement, _ := doc.GetElementByID("game")
-  gameElement.AppendChild(canvas)
+  dominit.Run(game.New())
+
+  <-make(chan struct{}, 0)
 }
