@@ -28,7 +28,7 @@ func (p *playing) init() {
       y: float64(gfxHeight) / 2 - p.playership.h / 2,
     },
   }
-
+  p.playerShots = []shot{}
   p.enemies = []enemy{
     {
       entity: entity{
