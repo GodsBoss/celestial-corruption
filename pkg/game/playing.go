@@ -19,6 +19,11 @@ type playing struct {
 
   triggers []trigger
 
+  // additionalTriggers are added to playing.triggers after the current triggers
+  // have been processed. This avoids changing the triggers slice during its
+  // iteration.
+  additionalTriggers []trigger
+
   timers timers
 }
 
@@ -151,7 +156,7 @@ func (p *playing) handleTriggers() {
       leftOverTriggers = append(leftOverTriggers, p.triggers[i])
     }
   }
-  p.triggers = leftOverTriggers
+  p.triggers = append(leftOverTriggers, p.additionalTriggers...)
 }
 
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)

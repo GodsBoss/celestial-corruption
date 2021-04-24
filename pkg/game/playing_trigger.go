@@ -50,3 +50,9 @@ func doSetMessage(msg *message) func(*playing) {
     p.message = msg
   }
 }
+
+func doAddTriggerFromMap(name string, m map[string]trigger) func(*playing) {
+  return func(p *playing) {
+    p.additionalTriggers = append(p.additionalTriggers, m[name])
+  }
+}
