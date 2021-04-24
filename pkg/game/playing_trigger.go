@@ -106,3 +106,9 @@ func doRemoveTimer(name string) func(*playing) {
     p.timers.Remove(name)
   }
 }
+
+func doSetNextState(nextState string) func(*playing) {
+  return func(p *playing) {
+    p.nextState = nextState
+  }
+}

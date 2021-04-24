@@ -29,6 +29,8 @@ type playing struct {
   timers timers
 
   kills map[string]int
+
+  nextState string
 }
 
 var _ state = &playing{}
@@ -79,7 +81,7 @@ func (p *playing) tick(ms int)  (next string) {
 
   p.playerShots = append(p.playerShots, p.playership.shots()...)
 
-  return ""
+  return p.nextState
 }
 
 func (p *playing) tickAll(ms int) {
@@ -163,7 +165,7 @@ func (p *playing) receiveKeyEvent(event interaction.KeyEvent) (next string){
     return "title"
   }
   p.keyboardControl.receiveKeyEvent(event)
-  return ""
+  return p.nextState
 }
 
 func (p *playing) renderable() renderable {
