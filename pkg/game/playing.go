@@ -150,6 +150,7 @@ func (p *playing) handleTriggers() {
     }
   }
   p.triggers = append(leftOverTriggers, p.additionalTriggers...)
+  p.additionalTriggers = nil
 }
 
 var playerSpeedDiagonalFactor = math.Sqrt(2.0)
