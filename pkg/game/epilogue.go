@@ -38,5 +38,7 @@ func (ep *epilogue) renderable() renderable {
       ),
       5,
       5,
-    ).renderable(ep.spriteFactory),  }
+    ).renderable(ep.spriteFactory),
+    newText("Press [T] to return to title screen.", 5, 189).renderable(ep.spriteFactory),
+  }
 }

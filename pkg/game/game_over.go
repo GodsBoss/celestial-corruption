@@ -39,5 +39,6 @@ func (gov *gameOver) renderable() renderable {
       5,
       5,
     ).renderable(gov.spriteFactory),
+    newText("Press [T] to return to title screen.", 5, 189).renderable(gov.spriteFactory),
   }
 }
