@@ -140,8 +140,8 @@ var spriteInfos = map[string]spriteInfo{
     h: 36,
   },
   "message_starting_orders_2": {
-    x: 370,
-    y: 194,
+    x: 442,
+    y: 122,
     w: 36,
     h: 36,
   },
