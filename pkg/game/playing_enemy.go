@@ -117,3 +117,41 @@ func (ws *wave1Shooter) control(ms int, e *enemy) {
   ws.recovering -= ms
   ws.rm.control(ms, e)
 }
+
+type brainControl struct {
+  targetX float64
+
+  up bool
+  dySwitchInterval int
+  dySwitchChance float64
+  dySwitchRecover int
+}
+
+func (bc *brainControl) control(ms int, e *enemy) {
+  e.dx, e.dy = 0, 0
+  if e.x > bc.targetX {
+    e.dx = -brainSpeed
+    return
+  }
+  bc.dySwitchRecover -= ms
+  if bc.dySwitchRecover <= 0 {
+    if rand.Float64() < bc.dySwitchChance {
+      bc.up = !bc.up
+    }
+    bc.dySwitchRecover += bc.dySwitchInterval
+  }
+  if e.y < 0 {
+    bc.up = false
+  }
+  if e.y > float64(gfxHeight) - e.h {
+    bc.up = true
+  }
+  e.dy = brainSpeed
+  if bc.up {
+    e.dy *= -1
+  }
+}
+
+const (
+  brainSpeed = 50.0
+)
