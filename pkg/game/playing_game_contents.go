@@ -157,7 +157,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "starting_orders_1",
+            imageID: "TODO",
             contents: lines(
               "Welcome to the Quantum Bomb Laboratories.",
               "Sorry that you had such a rough journey.",
@@ -177,7 +177,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "starting_orders_2",
+            imageID: "TODO",
             contents: lines(
               "You can now proceed. We will send you",
               "additional valuable information while",
@@ -207,7 +207,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "starting_orders_2",
+            imageID: "TODO",
             contents: lines(
               "Aliens defeated,",
               "Nightmare ahead!",
@@ -233,7 +233,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "starting_orders_2",
+            imageID: "TODO",
             contents: lines(
               "Nightmares defeated,",
               "Corrupted Earth Forces ahead!",
