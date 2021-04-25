@@ -470,7 +470,7 @@ func spawnEnemyAlien() enemy {
     control: &alienControl{
       targetX: 200.0 + rand.Float64() * 100,
       up: rand.Float64() > 0.5,
-      dySwitchInterval: seconds(1),
+      dySwitchInterval: seconds(2),
       dySwitchChance: 0.5,
     },
     health: 500,
