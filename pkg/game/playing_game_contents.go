@@ -255,6 +255,9 @@ func init() {
         doAddTrigger("stop_nightmare_spawn"),
         doAddTrigger("nightmares_lead_to_madness"),
         doAddTrigger("message_laboratory_warning"),
+        doAddTrigger("what_are_these"),
+        doAddTrigger("whisperings_1"),
+        doAddTrigger("whisperings_2"),
       ),
     ),
     "spawn_nightmares": &randomSpawner{
@@ -262,10 +265,23 @@ func init() {
       spawn: spawnOneEnemyTypeRandomly(spawnEnemyNightmare1, spawnEnemyNightmare2),
       maxEnemies: 10,
     },
+    "what_are_these": newConditionalTrigger(
+      oneOf(
+        killedAtLeast("nightmare_1", 1),
+        killedAtLeast("nightmare_2", 1),
+      ),
+      doSetMessage(
+        &message{
+          duration: seconds(1),
+          imageID: "astronaut",
+          contents: "What are these?",
+        },
+      ),
+    ),
     "nightmares_lead_to_madness": newConditionalTrigger(
       allOf(
-        killedAtLeast("nightmare_1", 5),
-        killedAtLeast("nightmare_2", 5),
+        killedAtLeast("nightmare_1", 10),
+        killedAtLeast("nightmare_2", 10),
       ),
       multipleDos(
         doSetMadnessLevel(2),
@@ -325,10 +341,48 @@ func init() {
         },
       ),
     ),
-    "stop_nightmare_spawn": newConditionalTrigger(
+    "whisperings_1": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 20),
+        killedAtLeast("nightmare_2", 20),
+      ),
+      doSetMessage(
+        &message{
+          duration: seconds(8),
+          imageID: "astronaut",
+          contents: lines(
+            // ----------------------------------------
+            "It feels like you can hear whispers. Are",
+            "these coming from those strange enemies?",
+            "Whatever tricks they have, they cannot",
+            "stop you from completing your mission.",
+          ),
+        },
+      ),
+    ),
+    "whisperings_2": newConditionalTrigger(
       allOf(
         killedAtLeast("nightmare_1", 25),
         killedAtLeast("nightmare_2", 25),
+      ),
+      doSetMessage(
+        &message{
+          duration: seconds(8),
+          imageID: "astronaut",
+          contents: lines(
+            // ----------------------------------------
+            "You have a nagging feeling in the back of",
+            "your head that something is wrong. Pretty",
+            "sure those whisperings have the purpose",
+            "to let you abort the mission. Ha!",
+          ),
+        },
+      ),
+    ),
+    "stop_nightmare_spawn": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 30),
+        killedAtLeast("nightmare_2", 30),
       ),
       multipleDos(
         doRemoveTrigger("spawn_nightmares"),
