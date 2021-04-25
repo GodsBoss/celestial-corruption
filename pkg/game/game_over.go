@@ -22,5 +22,22 @@ func (gov *gameOver) receiveKeyEvent(event interaction.KeyEvent) (next string) {
 }
 
 func (gov *gameOver) renderable() renderable {
-  return gov.spriteFactory.create("bg_game_over", 0, 0, 0)
+  return renderables{
+    gov.spriteFactory.create("bg_game_over", 0, 0, 0),
+    newText(
+      lines(
+        // --------------------------------------------------
+        "You failed to halt the alien invasion. Your last",
+        "thoughts are a nightmare of Earth overrun by a force",
+        "of evil only to wipe out humanity, with no trace of",
+        "it having ever existed. As your consciousness",
+        "slowly vanishes, you accept the mercy of Death.",
+        "",
+        "At least your pitiful failure",
+        "will be forgotten as well.",
+      ),
+      5,
+      5,
+    ).renderable(gov.spriteFactory),
+  }
 }
