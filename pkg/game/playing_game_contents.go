@@ -206,8 +206,7 @@ func init() {
       ),
       multipleDos(
         doRemoveTrigger("spawn_aliens"),
-        doAddTrigger("spawn_nightmares"),
-        doAddTrigger("stop_nightmare_spawn"),
+        doAddTrigger("wait_for_aliens_end"),
         doSetMessage(
           &message{
             duration: seconds(3),
@@ -218,6 +217,16 @@ func init() {
             ),
           },
         ),
+      ),
+    ),
+    "wait_for_aliens_end": newConditionalTrigger(
+      allOf(
+        enemiesAtMost(0),
+        enemyShotsAtMost(0),
+      ),
+      multipleDos(
+        doAddTrigger("spawn_nightmares"),
+        doAddTrigger("stop_nightmare_spawn"),
       ),
     ),
     "spawn_nightmares": &randomSpawner{
@@ -231,9 +240,8 @@ func init() {
         killedAtLeast("nightmare_2", 2),
       ),
       multipleDos(
-        doRemoveTrigger("spawn_aliens"),
-        doAddTrigger("spawn_corrupted_earth_forces"),
-        doAddTrigger("end_the_game"),
+        doRemoveTrigger("spawn_nightmares"),
+        doAddTrigger("wait_for_nightmare_end"),
         doSetMessage(
           &message{
             duration: seconds(3),
@@ -246,19 +254,56 @@ func init() {
         ),
       ),
     ),
+    "wait_for_nightmare_end": newConditionalTrigger(
+      allOf(
+        enemiesAtMost(0),
+        enemyShotsAtMost(0),
+      ),
+      multipleDos(
+        doAddTrigger("spawn_corrupted_earth_forces"),
+        doAddTrigger("stop_corrupted_earth_forces_spawn"),
+      ),
+    ),
     "spawn_corrupted_earth_forces": &randomSpawner{
       spawnInterval: seconds(1),
       spawn: spawnOneEnemyTypeRandomly(spawnEnemyCorruptedEarthForces1, spawnEnemyCorruptedEarthForces2),
       maxEnemies: 10,
     },
-    "end_the_game": newConditionalTrigger(
+    "stop_corrupted_earth_forces_spawn": newConditionalTrigger(
       allOf(
         killedAtLeast("corrupted_earth_forces_1", 2),
         killedAtLeast("corrupted_earth_forces_2", 2),
       ),
       multipleDos(
-        doSetNextState("epilogue"),
+        doRemoveTrigger("spawn_corrupted_earth_forces"),
+        doAddTrigger("wait_for_corrupted_earth_forces_end"),
       ),
+    ),
+    "wait_for_corrupted_earth_forces_end": newConditionalTrigger(
+      allOf(
+        enemiesAtMost(0),
+        enemyShotsAtMost(0),
+      ),
+      multipleDos(
+        doSetMessage(
+          &message{
+            duration: seconds(5),
+            imageID: "TODO",
+            contents: lines(
+              "The end is nigh!",
+            ),
+            imageAnimation: animation{
+              maxFrame: 1,
+              msPerFrame: 1000,
+            },
+          },
+        ),
+        doAddTrigger("end_the_game"),
+      ),
+    ),
+    "end_the_game": newConditionalTrigger(
+      invertCheck(showsMessage()),
+      doSetNextState("epilogue"),
     ),
   }
   for tID := range pTriggers {
