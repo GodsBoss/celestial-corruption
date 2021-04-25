@@ -73,11 +73,11 @@ func (g *game) ReceiveKeyEvent(event interaction.KeyEvent) {
 func (g *game) ReceiveMouseEvent(event interaction.MouseEvent) {}
 
 func (g *game) SetOutput(ctx2d *dom.Context2D) {
-	ctx2d.DisableImageSmoothing()
   g.output = ctx2d
 }
 
 func (g *game) Render() {
+	g.output.DisableImageSmoothing()
 	scale := g.scale.Get()
 	g.output.ClearRect(0, 0, gfxWidth*scale, gfxHeight*scale)
 	fillStyle, _ := dom.NewColorCanvasFillStyle("#111111")
