@@ -194,6 +194,7 @@ func init() {
         ),
         doAddTrigger("spawn_aliens"),
         doAddTrigger("stop_alien_spawn"),
+        doAddTrigger("brainy_aliens_lead_to_madness"),
       ),
     ),
     "spawn_aliens": &randomSpawner{
@@ -201,6 +202,10 @@ func init() {
       spawn: spawnOneEnemyTypeRandomly(spawnEnemyAlien, spawnEnemyBrainy),
       maxEnemies: 10,
     },
+    "brainy_aliens_lead_to_madness": newConditionalTrigger(
+      killedAtLeast("brainy", 1),
+      doSetMadnessLevel(1),
+    ),
     "stop_alien_spawn": newConditionalTrigger(
       allOf(
         killedAtLeast("alien", 2),
