@@ -167,8 +167,8 @@ func init() {
             contents: lines(
               "Welcome to the Quantum Bomb Laboratories.",
               "Sorry that you had such a rough journey.",
-              "The Quantum Bomb 9001 is already",
-              "attached to your ship.",
+              "The Quantum Bomb 9001 will be attached to",
+              "to your ship immediately.",
             ),
           },
         ),
