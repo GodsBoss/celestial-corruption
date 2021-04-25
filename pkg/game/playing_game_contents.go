@@ -431,7 +431,7 @@ func spawnEnemy1() enemy {
       msPerFrame: 100,
     },
     control: &randomMovement{
-      speed: 50.0,
+      speed: 40.0,
       switchTargetInterval: seconds(1),
     },
     health: 1,
@@ -454,10 +454,10 @@ func spawnEnemy2() enemy {
     },
     control: &wave1Shooter{
       rm: randomMovement{
-        speed: 40.0,
+        speed: 30.0,
         switchTargetInterval: seconds(2),
       },
-      bulletSpeed: 25,
+      bulletSpeed: 80,
     },
     health: 1,
     ramDamage: 200,
