@@ -165,3 +165,9 @@ func doSetQBomb(hasQBomb bool) func(*playing) {
     p.playership.hasQBomb = hasQBomb
   }
 }
+
+func doSetMadnessLevel(level int) func(*playing) {
+  return func(p *playing) {
+    p.playership.madnessLevel = level
+  }
+}
