@@ -257,6 +257,8 @@ func init() {
         doAddTrigger("stop_nightmare_spawn"),
         doAddTrigger("nightmares_lead_to_madness_1"),
         doAddTrigger("nightmares_lead_to_madness_2"),
+        doAddTrigger("message_change_route"),
+        doAddTrigger("message_laboratory_warning"),
       ),
     ),
     "spawn_nightmares": &randomSpawner{
@@ -270,6 +272,65 @@ func init() {
         killedAtLeast("nightmare_2", 1),
       ),
       doSetMadnessLevel(2),
+    ),
+    "message_change_route": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 2),
+        killedAtLeast("nightmare_2", 2),
+      ),
+      doSetMessage(
+        &message{
+          duration: seconds(3),
+          imageID: "astronaut",
+          contents: lines(
+            // ----------------------------------------
+            "Luckily, you checked your instruments.",
+            "Seems like your course wasn't completely",
+            "correct. It is now and you will reach the",
+            "enemy's home planet in time!",
+          ),
+        },
+      ),
+    ),
+    "message_laboratory_warning": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 3),
+        killedAtLeast("nightmare_2", 3),
+      ),
+      multipleDos(
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "laboratory",
+            contents: lines(
+              // ----------------------------------------
+              "Emanations... dangerous... etheral...",
+              "... without protection ... no chance ...",
+              "... dark evil alien god ...",
+              "(static)",
+              "... your immediate return!",
+            ),
+          },
+        ),
+        doAddTrigger("after_message_laboratory_warning"),
+      ),
+    ),
+    "after_message_laboratory_warning": newConditionalTrigger(
+      invertCheck(showsMessage()),
+      doSetMessage(
+        &message{
+          duration: seconds(3),
+          imageID: "astronaut",
+          contents: lines(
+            // ----------------------------------------
+            "The message came in scrambled. Why should",
+            "you return? Victory is close! Maybe the",
+            "aliens have overrun the laboratory and try",
+            "to stop you. That's it! The become",
+            "desperate. Good!",
+          ),
+        },
+      ),
     ),
     "nightmares_lead_to_madness_2": newConditionalTrigger(
       allOf(
