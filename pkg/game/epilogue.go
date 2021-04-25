@@ -22,5 +22,21 @@ func (ep *epilogue) receiveKeyEvent(event interaction.KeyEvent) (next string) {
 }
 
 func (ep *epilogue) renderable() renderable {
-  return ep.spriteFactory.create("bg_epilogue", 0, 0, 0)
+  return renderables{
+    ep.spriteFactory.create("bg_epilogue", 0, 0, 0),
+    newText(
+      lines(
+        // --------------------------------------------------
+        "Having descended deep into madness, you cannot",
+        "appreciate the Dark Alien God tricking you into",
+        "attacking Earth yourself. As the unstoppable Quantum",
+        "fire burns through your own home planet, slowly",
+        "consuming it and with it every single human,",
+        "your maniacal laughter echoes",
+        "within the otherwise empty",
+        "chambers of your space vessel.",
+      ),
+      5,
+      5,
+    ).renderable(ep.spriteFactory),  }
 }
