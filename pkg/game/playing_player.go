@@ -1,6 +1,8 @@
 package game
 
 import (
+  "strconv"
+
   "github.com/GodsBoss/gggg/pkg/interaction"
 )
 
@@ -28,6 +30,9 @@ type player struct {
   hasQBomb bool
 
   madness int
+
+  // madnessLevel goes from 0 (none) to 3 (maximum).
+  madnessLevel int
 }
 
 func (p *player) Tick(ms int) {
@@ -83,6 +88,24 @@ func (p *player) shots() []shot {
 
 func (p *player) Alive() bool {
   return p.health > 0
+}
+
+func (p *player) healthBar(sf *spriteFactory) renderable {
+  m := strconv.Itoa(p.madnessLevel+1)
+  r := renderables{
+    sf.create("astronaut_" + m, 5, 5, 0),
+  }
+  for i := 0; i<10; i++ {
+    typ := "empty"
+    if p.health > i*playerMaxHealth/10{
+      typ = "full"
+    }
+    r = append(
+      r,
+      sf.create("health_bar_" + typ + "_" + m, 20 + i * 10, 6, 0),
+    )
+  }
+  return r
 }
 
 type keyboardControl struct {

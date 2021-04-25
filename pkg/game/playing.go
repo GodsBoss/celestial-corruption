@@ -227,7 +227,11 @@ func (p *playing) renderable() renderable {
       p.spriteFactory.create(p.enemyShots[i].Type + "_shot", int(p.enemyShots[i].x), int(p.enemyShots[i].y), p.enemyShots[i].Frame()),
     )
   }
-  result = append(result, p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()))
+  result = append(
+    result,
+    p.spriteFactory.create("player_ship", int(p.playership.x), int(p.playership.y), p.playership.Frame()),
+    p.playership.healthBar(p.spriteFactory),
+  )
   if p.playership.hasQBomb {
     result = append(result, p.spriteFactory.create("q_bomb", int(p.playership.x), int(p.playership.y), 0))
   }
