@@ -13,6 +13,8 @@ const (
   playerReload = 100
 
   playerMaxHealth = 1000
+
+  playerShotPower = 100
 )
 
 type player struct {
@@ -79,7 +81,7 @@ func (p *player) shots() []shot {
         h: 4,
         dx: 200.0,
       },
-      power: 100,
+      power: playerShotPower,
       animation: *anim,
       control: nopShotControl{},
     },
