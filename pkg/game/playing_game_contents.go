@@ -359,15 +359,15 @@ func spawnEnemyNightmare1() enemy {
     entity: entity {
       x: 330,
       y: rand.Float64() * float64(gfxHeight),
-      w: 24,
-      h: 24,
+      w: 36,
+      h: 36,
     },
     animation: animation{
-      maxFrame: 3,
-      msPerFrame: 100,
+      maxFrame: 1,
+      msPerFrame: 500,
     },
     control: &randomMovement{
-      speed: 40.0,
+      speed: 20.0,
       switchTargetInterval: seconds(2),
     },
     health: 1,
