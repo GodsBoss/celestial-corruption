@@ -185,7 +185,7 @@ func (ac *alienControl) control(ms int, e *enemy) {
       shot{
         Type: "alien",
         entity: entity{
-          x: cx - 5,
+          x: cx - 8,
           y: cy,
           dx: -80,
           dy: 0,
