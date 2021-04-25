@@ -78,6 +78,12 @@ func showsMessage() func(*playing) bool {
   }
 }
 
+func madnessAtLeast(amount int) func(*playing) bool {
+  return func(p *playing) bool {
+    return p.playership.madness >= amount
+  }
+}
+
 func invertCheck(f func(*playing) bool) func(*playing) bool {
   return func(p *playing) bool {
     return !f(p)
