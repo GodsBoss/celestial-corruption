@@ -403,7 +403,7 @@ func spawnEnemyCorruptedEarthForces1() enemy {
     entity: entity {
       x: 330,
       y: rand.Float64() * float64(gfxHeight),
-      w: 24,
+      w: 72,
       h: 24,
     },
     animation: animation{

@@ -104,9 +104,9 @@ var spriteInfos = map[string]spriteInfo{
     h: 16,
   },
   "enemy_corrupted_earth_forces_1": {
-    x: 2,
-    y: 20,
-    w: 24,
+    x: 16,
+    y: 248,
+    w: 72,
     h: 24,
   },
   "enemy_corrupted_earth_forces_2": {
