@@ -235,10 +235,13 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "TODO",
+            imageID: "astronaut",
             contents: lines(
-              "Aliens defeated,",
-              "Nightmare ahead!",
+              // ----------------------------------------
+              "Your instruments catch very strange",
+              "readings... it is as if entities are ahead",
+              "which don't really belong to the material",
+              "realm. Will the cannons even hurt them?",
             ),
           },
         ),
