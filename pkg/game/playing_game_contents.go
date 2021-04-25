@@ -315,11 +315,11 @@ func spawnEnemyAlien() enemy {
     entity: entity {
       x: 330,
       y: rand.Float64() * float64(gfxHeight),
-      w: 24,
+      w: 16,
       h: 24,
     },
     animation: animation{
-      maxFrame: 3,
+      maxFrame: 5,
       msPerFrame: 100,
     },
     control: &randomMovement{
