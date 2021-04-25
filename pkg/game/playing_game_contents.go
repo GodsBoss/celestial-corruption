@@ -37,7 +37,7 @@ func init() {
           []enemy{
             {
               Type: "practice",
-              health: 1,
+              health: 1000,
               ramDamage: 1000000, // These guys are *strong*.
               entity: entity{
                 x: 250,
@@ -53,7 +53,7 @@ func init() {
             },
             {
               Type: "practice",
-              health: 1,
+              health: 1000,
               ramDamage: 1000000,
               entity: entity{
                 x: 270,
@@ -69,7 +69,7 @@ func init() {
             },
             {
               Type: "practice",
-              health: 1,
+              health: 1000,
               ramDamage: 1000000,
               entity: entity{
                 x: 220,
@@ -113,7 +113,7 @@ func init() {
             },
           },
         ),
-        doSetTimer("starting_orders_1", seconds(1)),
+        doSetTimer("starting_orders_1", seconds(8)),
         doAddTrigger("starting_orders_2"),
       ),
     ),
@@ -123,7 +123,7 @@ func init() {
         doRemoveTimer("starting_orders_1"),
         doSetMessage(
           &message{
-            duration: seconds(1),
+            duration: seconds(8),
             imageID: "starting_orders_2",
             contents: lines(
               "They developed a revolutionary weapon,",
@@ -162,7 +162,7 @@ func init() {
         doSetCinematicControl(),
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(8),
             imageID: "laboratory",
             contents: lines(
               "Welcome to the Quantum Bomb Laboratories.",
@@ -182,7 +182,7 @@ func init() {
         doSetQBomb(true),
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(8),
             imageID: "laboratory",
             contents: lines(
               "You can now proceed. We will send you",
@@ -207,7 +207,7 @@ func init() {
       multipleDos(
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(8),
             imageID: "laboratory",
             contents: lines(
               // ----------------------------------------
@@ -232,7 +232,7 @@ func init() {
         doAddTrigger("wait_for_aliens_end"),
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(8),
             imageID: "astronaut",
             contents: lines(
               // ----------------------------------------
@@ -271,7 +271,7 @@ func init() {
         doSetMadnessLevel(2),
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(8),
             imageID: "astronaut",
             contents: lines(
               // ----------------------------------------
@@ -292,7 +292,7 @@ func init() {
       multipleDos(
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(6),
             imageID: "laboratory",
             contents: lines(
               // ----------------------------------------
@@ -312,14 +312,14 @@ func init() {
       invertCheck(showsMessage()),
       doSetMessage(
         &message{
-          duration: seconds(3),
+          duration: seconds(8),
           imageID: "astronaut",
           contents: lines(
             // ----------------------------------------
             "The message came in scrambled. Why should",
             "you return? Victory is close! Maybe the",
             "aliens have overrun the laboratory and try",
-            "to stop you. That's it! The become",
+            "to stop you. That's it! They become",
             "desperate. Good!",
           ),
         },
@@ -335,7 +335,7 @@ func init() {
         doAddTrigger("wait_for_nightmare_end"),
         doSetMessage(
           &message{
-            duration: seconds(3),
+            duration: seconds(8),
             imageID: "astronaut",
             contents: lines(
               // ----------------------------------------
@@ -382,7 +382,7 @@ func init() {
       multipleDos(
         doSetMessage(
           &message{
-            duration: seconds(5),
+            duration: seconds(8),
             imageID: "planet",
             contents: lines(
               // ----------------------------------------
@@ -424,7 +424,7 @@ func spawnEnemy1() enemy {
       speed: 40.0,
       switchTargetInterval: seconds(1),
     },
-    health: 1,
+    health: 800,
     ramDamage: 75,
   }
 }
@@ -449,7 +449,7 @@ func spawnEnemy2() enemy {
       },
       bulletSpeed: 80,
     },
-    health: 1,
+    health: 600,
     ramDamage: 75,
   }
 }
@@ -473,7 +473,7 @@ func spawnEnemyAlien() enemy {
       dySwitchInterval: seconds(1),
       dySwitchChance: 0.5,
     },
-    health: 1,
+    health: 500,
     ramDamage: 40,
   }
 }
@@ -497,7 +497,7 @@ func spawnEnemyBrainy() enemy {
       dySwitchInterval: seconds(1),
       dySwitchChance: 0.5,
     },
-    health: 1,
+    health: 1000,
     ramDamage: 80,
   }
 }
@@ -519,7 +519,7 @@ func spawnEnemyNightmare1() enemy {
       speed: 20.0,
       switchTargetInterval: seconds(2),
     },
-    health: 1,
+    health: 1000,
     ramDamage: 100,
   }
 }
@@ -541,7 +541,7 @@ func spawnEnemyNightmare2() enemy {
       speed: 40.0,
       switchTargetInterval: seconds(2),
     },
-    health: 1,
+    health: 500,
     ramDamage: 50,
   }
 }
@@ -566,7 +566,7 @@ func spawnEnemyCorruptedEarthForces1() enemy {
       },
       recovery: warshipRecovery,
     },
-    health: 1,
+    health: 1500,
     ramDamage: 500,
   }
 }
@@ -591,7 +591,7 @@ func spawnEnemyCorruptedEarthForces2() enemy {
       },
       shotRecovery: fightShotRecovery,
     },
-    health: 1,
+    health: 500,
     ramDamage: 50,
   }
 }
