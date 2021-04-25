@@ -194,6 +194,7 @@ func init() {
         ),
         doAddTrigger("spawn_aliens"),
         doAddTrigger("stop_alien_spawn"),
+        doAddTrigger("brainy_aliens_laboratory_message"),
         doAddTrigger("brainy_aliens_lead_to_madness"),
       ),
     ),
@@ -202,6 +203,23 @@ func init() {
       spawn: spawnOneEnemyTypeRandomly(spawnEnemyAlien, spawnEnemyBrainy),
       maxEnemies: 10,
     },
+    "brainy_aliens_laboratory_message": newConditionalTrigger(
+      killedAtLeast("brainy", 1),
+      doSetMessage(
+        &message{
+          duration: seconds(3),
+          imageID: "larboratory",
+          contents: lines(
+            // ----------------------------------------
+            "Here is the laboratory. These aliens seem",
+            "to emanate some unknown kind of energy.",
+            "We don't know wether this happens on",
+            "purpose or if they are just that way.",
+            "Be careful!",
+          ),
+        },
+      ),
+    ),
     "brainy_aliens_lead_to_madness": newConditionalTrigger(
       killedAtLeast("brainy", 1),
       doSetMadnessLevel(1),
