@@ -101,6 +101,17 @@ func allOf(fs ...func(*playing) bool) func(*playing) bool {
   }
 }
 
+func oneOf(fs ...func(*playing) bool) func(*playing) bool {
+  return func(p *playing) bool {
+    for i := range fs {
+      if fs[i](p) {
+        return true
+      }
+    }
+    return false
+  }
+}
+
 func multipleDos(dos ...func(*playing)) func(*playing) {
   return func(p *playing) {
     for i := range dos {
