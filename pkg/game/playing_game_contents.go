@@ -161,7 +161,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "TODO",
+            imageID: "larboratory",
             contents: lines(
               "Welcome to the Quantum Bomb Laboratories.",
               "Sorry that you had such a rough journey.",
@@ -181,7 +181,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "TODO",
+            imageID: "larboratory",
             contents: lines(
               "You can now proceed. We will send you",
               "additional valuable information while",
