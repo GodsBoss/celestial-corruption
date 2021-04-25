@@ -566,7 +566,7 @@ func spawnEnemyCorruptedEarthForces1() enemy {
       },
       recovery: warshipRecovery,
     },
-    health: 1500,
+    health: 1800,
     ramDamage: 500,
   }
 }
@@ -591,7 +591,7 @@ func spawnEnemyCorruptedEarthForces2() enemy {
       },
       shotRecovery: fightShotRecovery,
     },
-    health: 500,
+    health: 800,
     ramDamage: 50,
   }
 }
