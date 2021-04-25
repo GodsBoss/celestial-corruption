@@ -121,7 +121,7 @@ func (ws *wave1Shooter) control(ms int, e *enemy) {
 }
 
 const (
-  waveShooterShotPower = 50
+  waveShooterShotPower = 40
 )
 
 type brainControl struct {
@@ -219,7 +219,7 @@ func (ac *alienControl) control(ms int, e *enemy) {
 
 const (
   alienSpeed = 35.0
-  alienShotPower = 50
+  alienShotPower = 80
 )
 
 type corruptedWarshipControl struct{
@@ -302,7 +302,7 @@ const (
   warshipShotRecovery = 250
   warshipShots = 4
   warshipSpeed = 30.0
-  warshipShotPower = 50
+  warshipShotPower = 100
 )
 
 type fighterControl struct {
@@ -394,5 +394,5 @@ func (fc *fighterControl) control(ms int, e *enemy) {
 
 const (
   fightShotRecovery = 3000
-  fighterShotPower = 10
+  fighterShotPower = 25
 )
