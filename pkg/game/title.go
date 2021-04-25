@@ -24,5 +24,8 @@ func (t *title) receiveKeyEvent(event interaction.KeyEvent) (next string) {
 }
 
 func (t *title) renderable() renderable {
-  return t.spriteFactory.create("bg_title", 0, 0, 0)
+  return renderables{
+    t.spriteFactory.create("bg_title", 0, 0, 0),
+    newText("Press [P] to start.", 5, 189).renderable(t.spriteFactory),
+  }
 }
