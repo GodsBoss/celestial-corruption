@@ -61,7 +61,7 @@ func (mv *randomMovement) control(ms int, e *enemy) {
 
   if mv.waitForNextTarget <= 0 {
     mv.waitForNextTarget += mv.switchTargetInterval
-    mv.targetX, mv.targetY = rand.Float64() * float64(gfxWidth), rand.Float64() * float64(gfxHeight)
+    mv.targetX, mv.targetY = rand.Float64() * (float64(gfxWidth)-e.w), rand.Float64() * (float64(gfxHeight)-e.h)
   }
 
   e.dx = 0
