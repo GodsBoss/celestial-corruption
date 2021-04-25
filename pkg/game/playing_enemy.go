@@ -259,13 +259,13 @@ func (ctrl *corruptedWarshipControl) control(ms int, e *enemy) {
     return
   }
 
-  cx, cy := e.Center()
+  _, cy := e.Center()
   e.playing.enemyShots = append(
     e.playing.enemyShots,
     shot{
       Type: "void",
       entity: entity{
-        x: cx - 5,
+        x: e.x - 12,
         y: cy,
         dx: -80,
         dy: 0,
