@@ -98,10 +98,10 @@ var spriteInfos = map[string]spriteInfo{
     h: 36,
   },
   "enemy_nightmare_2": {
-    x: 2,
-    y: 46,
-    w: 24,
-    h: 24,
+    x: 16,
+    y: 211,
+    w: 16,
+    h: 16,
   },
   "enemy_corrupted_earth_forces_1": {
     x: 2,
