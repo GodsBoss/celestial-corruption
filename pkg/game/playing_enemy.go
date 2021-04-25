@@ -102,6 +102,8 @@ func (ws *wave1Shooter) control(ms int, e *enemy) {
             y: cy - 4,
             dx: (e.playing.playership.x - cx + 4) * ws.bulletSpeed / d,
             dy: (e.playing.playership.y - cy + 4) * ws.bulletSpeed / d,
+            w: 8,
+            h: 8,
           },
           power: 50,
           animation: animation{
@@ -187,6 +189,8 @@ func (ac *alienControl) control(ms int, e *enemy) {
           y: cy,
           dx: -80,
           dy: 0,
+          w: 8,
+          h: 8,
         },
         power: 50,
         animation: animation{
