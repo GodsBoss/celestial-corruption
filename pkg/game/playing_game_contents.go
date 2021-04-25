@@ -252,6 +252,7 @@ func init() {
       multipleDos(
         doAddTrigger("spawn_nightmares"),
         doAddTrigger("stop_nightmare_spawn"),
+        doAddTrigger("nightmares_lead_to_madness"),
       ),
     ),
     "spawn_nightmares": &randomSpawner{
@@ -259,6 +260,13 @@ func init() {
       spawn: spawnOneEnemyTypeRandomly(spawnEnemyNightmare1, spawnEnemyNightmare2),
       maxEnemies: 10,
     },
+    "nightmares_lead_to_madness": newConditionalTrigger(
+      allOf(
+        killedAtLeast("nightmare_1", 1),
+        killedAtLeast("nightmare_2", 1),
+      ),
+      doSetMadnessLevel(2),
+    ),
     "stop_nightmare_spawn": newConditionalTrigger(
       allOf(
         killedAtLeast("nightmare_1", 2),
