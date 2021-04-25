@@ -435,7 +435,7 @@ func spawnEnemy1() enemy {
       switchTargetInterval: seconds(1),
     },
     health: 1,
-    ramDamage: 100,
+    ramDamage: 75,
   }
 }
 
@@ -460,7 +460,7 @@ func spawnEnemy2() enemy {
       bulletSpeed: 80,
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 75,
   }
 }
 
@@ -484,7 +484,7 @@ func spawnEnemyAlien() enemy {
       dySwitchChance: 0.5,
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 40,
   }
 }
 
@@ -508,7 +508,7 @@ func spawnEnemyBrainy() enemy {
       dySwitchChance: 0.5,
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 80,
   }
 }
 
@@ -530,7 +530,7 @@ func spawnEnemyNightmare1() enemy {
       switchTargetInterval: seconds(2),
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 100,
   }
 }
 
@@ -552,7 +552,7 @@ func spawnEnemyNightmare2() enemy {
       switchTargetInterval: seconds(2),
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 50,
   }
 }
 
@@ -577,7 +577,7 @@ func spawnEnemyCorruptedEarthForces1() enemy {
       recovery: warshipRecovery,
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 500,
   }
 }
 
@@ -602,7 +602,7 @@ func spawnEnemyCorruptedEarthForces2() enemy {
       shotRecovery: fightShotRecovery,
     },
     health: 1,
-    ramDamage: 200,
+    ramDamage: 50,
   }
 }
 
