@@ -111,7 +111,8 @@ func multipleDos(dos ...func(*playing)) func(*playing) {
 
 func doSetMessage(msg *message) func(*playing) {
   return func(p *playing) {
-    p.message = msg
+    cp := *msg
+    p.message = &cp
   }
 }
 
