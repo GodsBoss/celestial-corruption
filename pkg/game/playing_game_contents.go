@@ -20,6 +20,8 @@ func init() {
             duration: forever,
             imageID: "target_practice",
             contents: lines(
+              // Maximum message width:
+              // ----------------------------------------
               "Hello, commander! We don't have much time.",
               "Shoot the targets for practice!",
               "We continue when they are destroyed.",
@@ -288,14 +290,15 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(5),
-            imageID: "TODO",
+            imageID: "planet",
             contents: lines(
-              "The end is nigh!",
+              // ----------------------------------------
+              "The enemy's home planet is near. It looks",
+              "like a twisted version of Earth, deeply",
+              "corrupted. Luckily, the Quantum Bomb will",
+              "end its existence. Humanity will be",
+              "safe again!",
             ),
-            imageAnimation: animation{
-              maxFrame: 1,
-              msPerFrame: 1000,
-            },
           },
         ),
         doAddTrigger("end_the_game"),
