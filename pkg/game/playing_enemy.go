@@ -105,7 +105,7 @@ func (ws *wave1Shooter) control(ms int, e *enemy) {
             w: 8,
             h: 8,
           },
-          power: 50,
+          power: waveShooterShotPower,
           animation: animation{
             maxFrame: 3,
             msPerFrame: 50,
@@ -119,6 +119,10 @@ func (ws *wave1Shooter) control(ms int, e *enemy) {
   ws.recovering -= ms
   ws.rm.control(ms, e)
 }
+
+const (
+  waveShooterShotPower = 50
+)
 
 type brainControl struct {
   targetX float64
@@ -192,7 +196,7 @@ func (ac *alienControl) control(ms int, e *enemy) {
           w: 8,
           h: 8,
         },
-        power: 50,
+        power: alienShotPower,
         animation: animation{
           maxFrame: 3,
           msPerFrame: 50,
@@ -215,6 +219,7 @@ func (ac *alienControl) control(ms int, e *enemy) {
 
 const (
   alienSpeed = 35.0
+  alienShotPower = 50
 )
 
 type corruptedWarshipControl struct{
@@ -272,7 +277,7 @@ func (ctrl *corruptedWarshipControl) control(ms int, e *enemy) {
         w: 12,
         h: 12,
       },
-      power: 50,
+      power: warshipShotPower,
       animation: animation{
         maxFrame: 1,
         msPerFrame: 100,
@@ -297,6 +302,7 @@ const (
   warshipShotRecovery = 250
   warshipShots = 4
   warshipSpeed = 30.0
+  warshipShotPower = 50
 )
 
 type fighterControl struct {
@@ -323,7 +329,7 @@ func (fc *fighterControl) control(ms int, e *enemy) {
           w: 4,
           h: 4,
         },
-        power: 10,
+        power: fighterShotPower,
         animation: animation{
           maxFrame: 3,
           msPerFrame: 50,
@@ -340,7 +346,7 @@ func (fc *fighterControl) control(ms int, e *enemy) {
           w: 4,
           h: 4,
         },
-        power: 10,
+        power: fighterShotPower,
         animation: animation{
           maxFrame: 3,
           msPerFrame: 50,
@@ -357,7 +363,7 @@ func (fc *fighterControl) control(ms int, e *enemy) {
           w: 4,
           h: 4,
         },
-        power: 10,
+        power: fighterShotPower,
         animation: animation{
           maxFrame: 3,
           msPerFrame: 50,
@@ -374,7 +380,7 @@ func (fc *fighterControl) control(ms int, e *enemy) {
           w: 4,
           h: 4,
         },
-        power: 10,
+        power: fighterShotPower,
         animation: animation{
           maxFrame: 3,
           msPerFrame: 50,
@@ -388,4 +394,5 @@ func (fc *fighterControl) control(ms int, e *enemy) {
 
 const (
   fightShotRecovery = 3000
+  fighterShotPower = 10
 )
