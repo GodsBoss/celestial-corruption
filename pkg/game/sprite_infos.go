@@ -145,6 +145,12 @@ var spriteInfos = map[string]spriteInfo{
     w: 36,
     h: 36,
   },
+  "madness_particles": {
+    x: 100,
+    y: 50,
+    w: 16,
+    h: 16,
+  },
   "char_a": {
     x: 0,
     y: 762,
