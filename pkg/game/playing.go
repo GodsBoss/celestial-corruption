@@ -101,13 +101,18 @@ func (p *playing) tickAll(ms int) {
 }
 
 func (p *playing) removeGoneShots() {
+  p.playerShots = onlyNotGoneShots(p.playerShots)
+  p.enemyShots = onlyNotGoneShots(p.enemyShots)
+}
+
+func onlyNotGoneShots(shots []shot) []shot {
   newShots := make([]shot, 0)
-  for i := range p.playerShots {
-    if !p.playerShots[i].Gone() {
-      newShots = append(newShots, p.playerShots[i])
+  for i := range shots {
+    if !shots[i].Gone() {
+      newShots = append(newShots, shots[i])
     }
   }
-  p.playerShots = newShots
+  return newShots
 }
 
 func (p *playing) handleEnemyShotCollisions() {
