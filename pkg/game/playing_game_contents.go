@@ -145,8 +145,8 @@ func init() {
     },
     "stop_first_wave": newConditionalTrigger(
       allOf(
-        killedAtLeast("1", 2),
-        killedAtLeast("2", 2),
+        killedAtLeast("1", 20),
+        killedAtLeast("2", 20),
       ),
       multipleDos(
         doRemoveTrigger("spawn_first_wave"),
@@ -163,7 +163,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "larboratory",
+            imageID: "laboratory",
             contents: lines(
               "Welcome to the Quantum Bomb Laboratories.",
               "Sorry that you had such a rough journey.",
@@ -183,7 +183,7 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "larboratory",
+            imageID: "laboratory",
             contents: lines(
               "You can now proceed. We will send you",
               "additional valuable information while",
@@ -195,7 +195,6 @@ func init() {
         doAddTrigger("spawn_aliens"),
         doAddTrigger("stop_alien_spawn"),
         doAddTrigger("brainy_aliens_laboratory_message"),
-        doAddTrigger("brainy_aliens_lead_to_madness"),
       ),
     ),
     "spawn_aliens": &randomSpawner{
@@ -204,30 +203,29 @@ func init() {
       maxEnemies: 10,
     },
     "brainy_aliens_laboratory_message": newConditionalTrigger(
-      killedAtLeast("brainy", 1),
-      doSetMessage(
-        &message{
-          duration: seconds(3),
-          imageID: "larboratory",
-          contents: lines(
-            // ----------------------------------------
-            "Here is the laboratory. These aliens seem",
-            "to emanate some unknown kind of energy.",
-            "We don't know wether this happens on",
-            "purpose or if they are just that way.",
-            "Be careful!",
-          ),
-        },
+      killedAtLeast("brainy", 5),
+      multipleDos(
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "laboratory",
+            contents: lines(
+              // ----------------------------------------
+              "Here is the laboratory. These aliens seem",
+              "to emanate some unknown kind of energy.",
+              "We don't know wether this happens on",
+              "purpose or if they are just that way.",
+              "Be careful!",
+            ),
+          },
+        ),
+        doSetMadnessLevel(1),
       ),
-    ),
-    "brainy_aliens_lead_to_madness": newConditionalTrigger(
-      killedAtLeast("brainy", 1),
-      doSetMadnessLevel(1),
     ),
     "stop_alien_spawn": newConditionalTrigger(
       allOf(
-        killedAtLeast("alien", 2),
-        killedAtLeast("brainy", 2),
+        killedAtLeast("alien", 20),
+        killedAtLeast("brainy", 20),
       ),
       multipleDos(
         doRemoveTrigger("spawn_aliens"),
@@ -255,9 +253,7 @@ func init() {
       multipleDos(
         doAddTrigger("spawn_nightmares"),
         doAddTrigger("stop_nightmare_spawn"),
-        doAddTrigger("nightmares_lead_to_madness_1"),
-        doAddTrigger("nightmares_lead_to_madness_2"),
-        doAddTrigger("message_change_route"),
+        doAddTrigger("nightmares_lead_to_madness"),
         doAddTrigger("message_laboratory_warning"),
       ),
     ),
@@ -266,36 +262,32 @@ func init() {
       spawn: spawnOneEnemyTypeRandomly(spawnEnemyNightmare1, spawnEnemyNightmare2),
       maxEnemies: 10,
     },
-    "nightmares_lead_to_madness_1": newConditionalTrigger(
+    "nightmares_lead_to_madness": newConditionalTrigger(
       allOf(
-        killedAtLeast("nightmare_1", 1),
-        killedAtLeast("nightmare_2", 1),
+        killedAtLeast("nightmare_1", 5),
+        killedAtLeast("nightmare_2", 5),
       ),
-      doSetMadnessLevel(2),
-    ),
-    "message_change_route": newConditionalTrigger(
-      allOf(
-        killedAtLeast("nightmare_1", 2),
-        killedAtLeast("nightmare_2", 2),
-      ),
-      doSetMessage(
-        &message{
-          duration: seconds(3),
-          imageID: "astronaut",
-          contents: lines(
-            // ----------------------------------------
-            "Luckily, you checked your instruments.",
-            "Seems like your course wasn't completely",
-            "correct. It is now and you will reach the",
-            "enemy's home planet in time!",
-          ),
-        },
+      multipleDos(
+        doSetMadnessLevel(2),
+        doSetMessage(
+          &message{
+            duration: seconds(3),
+            imageID: "astronaut",
+            contents: lines(
+              // ----------------------------------------
+              "Luckily, you checked your instruments.",
+              "Seems like your course wasn't completely",
+              "correct. It is now and you will reach the",
+              "enemy's home planet in time!",
+            ),
+          },
+        ),
       ),
     ),
     "message_laboratory_warning": newConditionalTrigger(
       allOf(
-        killedAtLeast("nightmare_1", 3),
-        killedAtLeast("nightmare_2", 3),
+        killedAtLeast("nightmare_1", 15),
+        killedAtLeast("nightmare_2", 15),
       ),
       multipleDos(
         doSetMessage(
@@ -313,6 +305,7 @@ func init() {
           },
         ),
         doAddTrigger("after_message_laboratory_warning"),
+        doSetMadnessLevel(3),
       ),
     ),
     "after_message_laboratory_warning": newConditionalTrigger(
@@ -332,17 +325,10 @@ func init() {
         },
       ),
     ),
-    "nightmares_lead_to_madness_2": newConditionalTrigger(
-      allOf(
-        killedAtLeast("nightmare_1", 3),
-        killedAtLeast("nightmare_2", 3),
-      ),
-      doSetMadnessLevel(3),
-    ),
     "stop_nightmare_spawn": newConditionalTrigger(
       allOf(
-        killedAtLeast("nightmare_1", 5),
-        killedAtLeast("nightmare_2", 5),
+        killedAtLeast("nightmare_1", 25),
+        killedAtLeast("nightmare_2", 25),
       ),
       multipleDos(
         doRemoveTrigger("spawn_nightmares"),
@@ -350,10 +336,14 @@ func init() {
         doSetMessage(
           &message{
             duration: seconds(3),
-            imageID: "TODO",
+            imageID: "astronaut",
             contents: lines(
-              "Nightmares defeated,",
-              "Corrupted Earth Forces ahead!",
+              // ----------------------------------------
+              "Insane! The aliens have copied the designs",
+              "of Earth ships and twisted them to make",
+              "them more powerful. You should still be",
+              "able to defeat them, at least they use the",
+              "same tactics, known to you.",
             ),
           },
         ),
@@ -376,8 +366,8 @@ func init() {
     },
     "stop_corrupted_earth_forces_spawn": newConditionalTrigger(
       allOf(
-        killedAtLeast("corrupted_earth_forces_1", 2),
-        killedAtLeast("corrupted_earth_forces_2", 2),
+        killedAtLeast("corrupted_earth_forces_1", 20),
+        killedAtLeast("corrupted_earth_forces_2", 20),
       ),
       multipleDos(
         doRemoveTrigger("spawn_corrupted_earth_forces"),

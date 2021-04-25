@@ -157,7 +157,7 @@ var spriteInfos = map[string]spriteInfo{
     w: 36,
     h: 36,
   },
-  "message_larboratory": {
+  "message_laboratory": {
     x: 370,
     y: 194,
     w: 36,
