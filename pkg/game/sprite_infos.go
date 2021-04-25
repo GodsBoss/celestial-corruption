@@ -111,9 +111,9 @@ var spriteInfos = map[string]spriteInfo{
   },
   "enemy_corrupted_earth_forces_2": {
     x: 2,
-    y: 46,
-    w: 24,
-    h: 24,
+    y: 275,
+    w: 16,
+    h: 16,
   },
   "message_container": {
     x: 340,
