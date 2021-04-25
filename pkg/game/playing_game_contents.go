@@ -471,7 +471,7 @@ func spawnEnemyAlien() enemy {
       x: 330,
       y: rand.Float64() * float64(gfxHeight),
       w: 16,
-      h: 24,
+      h: 12,
     },
     animation: animation{
       maxFrame: 5,
