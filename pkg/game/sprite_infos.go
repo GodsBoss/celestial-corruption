@@ -49,6 +49,12 @@ var spriteInfos = map[string]spriteInfo{
     w: 8,
     h: 8,
   },
+  "alien_shot": {
+    x: 100,
+    y: 25,
+    w: 8,
+    h: 8,
+  },
   "enemy_1": {
     x: 2,
     y: 86,
