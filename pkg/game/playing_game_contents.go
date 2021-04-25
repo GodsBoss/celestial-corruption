@@ -594,9 +594,12 @@ func spawnEnemyCorruptedEarthForces2() enemy {
       maxFrame: 3,
       msPerFrame: 100,
     },
-    control: &randomMovement{
-      speed: 40.0,
-      switchTargetInterval: seconds(2),
+    control: &fighterControl{
+      rm: randomMovement{
+        speed: 40.0,
+        switchTargetInterval: seconds(2),
+      },
+      shotRecovery: fightShotRecovery,
     },
     health: 1,
     ramDamage: 200,

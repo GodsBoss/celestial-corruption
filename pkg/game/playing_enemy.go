@@ -294,3 +294,94 @@ const (
   warshipShots = 4
   warshipSpeed = 30.0
 )
+
+type fighterControl struct {
+  rm randomMovement
+
+  shotRecovery int
+}
+
+func (fc *fighterControl) control(ms int, e *enemy) {
+  fc.shotRecovery -= ms
+  if fc.shotRecovery < 0 {
+    fc.shotRecovery += fightShotRecovery
+
+    cx, cy := e.Center()
+    e.playing.enemyShots = append(
+      e.playing.enemyShots,
+      shot{
+        Type: "mini_void",
+        entity: entity{
+          x: cx,
+          y: cy,
+          dx: -60,
+          dy: 0,
+          w: 4,
+          h: 4,
+        },
+        power: 10,
+        animation: animation{
+          maxFrame: 3,
+          msPerFrame: 50,
+        },
+        control: nopShotControl{},
+      },
+      shot{
+        Type: "mini_void",
+        entity: entity{
+          x: cx,
+          y: cy,
+          dx: 60,
+          dy: 0,
+          w: 4,
+          h: 4,
+        },
+        power: 10,
+        animation: animation{
+          maxFrame: 3,
+          msPerFrame: 50,
+        },
+        control: nopShotControl{},
+      },
+      shot{
+        Type: "mini_void",
+        entity: entity{
+          x: cx,
+          y: cy,
+          dx: 0,
+          dy: -60,
+          w: 4,
+          h: 4,
+        },
+        power: 10,
+        animation: animation{
+          maxFrame: 3,
+          msPerFrame: 50,
+        },
+        control: nopShotControl{},
+      },
+      shot{
+        Type: "mini_void",
+        entity: entity{
+          x: cx,
+          y: cy,
+          dx: 0,
+          dy: 60,
+          w: 4,
+          h: 4,
+        },
+        power: 10,
+        animation: animation{
+          maxFrame: 3,
+          msPerFrame: 50,
+        },
+        control: nopShotControl{},
+      },
+    )
+  }
+  fc.rm.control(ms, e)
+}
+
+const (
+  fightShotRecovery = 3000
+)
