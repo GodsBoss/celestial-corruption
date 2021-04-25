@@ -105,6 +105,10 @@ func init() {
               "through the alien swarms to Timos-1.",
               "There is a weapons laboratory.",
             ),
+            imageAnimation: animation{
+              maxFrame: 3,
+              msPerFrame: 100,
+            },
           },
         ),
         doSetTimer("starting_orders_1", seconds(1)),
