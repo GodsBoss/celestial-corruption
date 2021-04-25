@@ -268,7 +268,7 @@ func (ctrl *corruptedWarshipControl) control(ms int, e *enemy) {
         x: e.x - 12,
         y: cy,
         dx: -80,
-        dy: 0,
+        dy: 10 - 20*rand.Float64(),
         w: 12,
         h: 12,
       },
