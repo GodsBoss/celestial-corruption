@@ -155,3 +155,60 @@ func (bc *brainControl) control(ms int, e *enemy) {
 const (
   brainSpeed = 50.0
 )
+
+type alienControl struct {
+  targetX float64
+
+  up bool
+  dySwitchInterval int
+  dySwitchChance float64
+  dySwitchRecover int
+}
+
+func (ac *alienControl) control(ms int, e *enemy) {
+  e.dx, e.dy = 0, 0
+  if e.x > ac.targetX {
+    e.dx = -alienSpeed
+    return
+  }
+  ac.dySwitchRecover -= ms
+  if ac.dySwitchRecover <= 0 {
+    if rand.Float64() < ac.dySwitchChance {
+      ac.up = !ac.up
+    }
+    ac.dySwitchRecover += ac.dySwitchInterval
+    cx, cy := e.Center()
+    e.playing.enemyShots = append(
+      e.playing.enemyShots,
+      shot{
+        Type: "alien",
+        entity: entity{
+          x: cx - 5,
+          y: cy,
+          dx: -80,
+          dy: 0,
+        },
+        power: 50,
+        animation: animation{
+          maxFrame: 3,
+          msPerFrame: 50,
+        },
+        control: nopShotControl{},
+      },
+    )
+  }
+  if e.y < 0 {
+    ac.up = false
+  }
+  if e.y > float64(gfxHeight) - e.h {
+    ac.up = true
+  }
+  e.dy = alienSpeed
+  if ac.up {
+    e.dy *= -1
+  }
+}
+
+const (
+  alienSpeed = 35.0
+)

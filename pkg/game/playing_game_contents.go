@@ -477,9 +477,11 @@ func spawnEnemyAlien() enemy {
       maxFrame: 5,
       msPerFrame: 100,
     },
-    control: &randomMovement{
-      speed: 40.0,
-      switchTargetInterval: seconds(2),
+    control: &alienControl{
+      targetX: 200.0 + rand.Float64() * 100,
+      up: rand.Float64() > 0.5,
+      dySwitchInterval: seconds(1),
+      dySwitchChance: 0.5,
     },
     health: 1,
     ramDamage: 200,
@@ -500,7 +502,7 @@ func spawnEnemyBrainy() enemy {
       msPerFrame: 100,
     },
     control: &brainControl{
-      targetX: 150.0 + rand.Float64() * 100,
+      targetX: 150.0 + rand.Float64() * 50,
       up: rand.Float64() > 0.5,
       dySwitchInterval: seconds(1),
       dySwitchChance: 0.5,
