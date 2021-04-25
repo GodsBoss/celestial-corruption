@@ -212,3 +212,85 @@ func (ac *alienControl) control(ms int, e *enemy) {
 const (
   alienSpeed = 35.0
 )
+
+type corruptedWarshipControl struct{
+  rm randomMovement
+
+  destSet bool
+  destX float64
+  destY float64
+
+  recovery int
+  shotRecovery int
+  remainingShots int
+}
+
+func (ctrl *corruptedWarshipControl) control(ms int, e *enemy) {
+  ctrl.recovery -= ms
+
+  if ctrl.recovery > 0 {
+    ctrl.rm.control(ms, e)
+    return
+  }
+
+  if !ctrl.destSet {
+    ctrl.destSet = true
+    ctrl.destX = 250.0
+    ctrl.destY = rand.Float64() * float64(gfxHeight - 40)
+    ctrl.remainingShots = warshipShots
+    ctrl.shotRecovery = 0
+  }
+
+  d := distance(ctrl.destX, ctrl.destY, e.x, e.y)
+  if d > 5.0 {
+    e.dx = (ctrl.destX - e.x) * warshipSpeed / d
+    e.dy = (ctrl.destY - e.y) * warshipSpeed / d
+    return
+  }
+  e.dx = 0
+  e.dy = 0
+
+  ctrl.shotRecovery -= ms
+  if ctrl.shotRecovery > 0 {
+    return
+  }
+
+  cx, cy := e.Center()
+  e.playing.enemyShots = append(
+    e.playing.enemyShots,
+    shot{
+      Type: "void",
+      entity: entity{
+        x: cx - 5,
+        y: cy,
+        dx: -80,
+        dy: 0,
+        w: 12,
+        h: 12,
+      },
+      power: 50,
+      animation: animation{
+        maxFrame: 1,
+        msPerFrame: 100,
+      },
+      control: nopShotControl{},
+    },
+  )
+
+  ctrl.remainingShots--
+  if ctrl.remainingShots <= 0 {
+    // No more shots, back to recovery.
+    ctrl.recovery = warshipRecovery
+    ctrl.destSet = false
+    return
+  }
+
+  ctrl.shotRecovery = warshipShotRecovery
+}
+
+const (
+  warshipRecovery = 10000
+  warshipShotRecovery = 250
+  warshipShots = 4
+  warshipSpeed = 30.0
+)

@@ -569,9 +569,12 @@ func spawnEnemyCorruptedEarthForces1() enemy {
       maxFrame: 3,
       msPerFrame: 100,
     },
-    control: &randomMovement{
-      speed: 40.0,
-      switchTargetInterval: seconds(2),
+    control: &corruptedWarshipControl{
+      rm: randomMovement{
+        speed: warshipSpeed / 2.0,
+        switchTargetInterval: seconds(2),
+      },
+      recovery: warshipRecovery,
     },
     health: 1,
     ramDamage: 200,
