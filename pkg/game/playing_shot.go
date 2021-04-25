@@ -21,7 +21,7 @@ func (sh *shot) Tick(ms int) {
 }
 
 func (sh *shot) Gone() bool {
-  return (sh.dx > 0 && sh.x > float64(gfxWidth)+10) || (sh.dy > 0 && sh.y > float64(gfxHeight)) || (sh.dx < 0 && sh.x < 0) || (sh.dy < 0 && sh.y < 0)
+  return (sh.dx > 0 && sh.x > float64(gfxWidth)+10) || (sh.dy > 0 && sh.y > float64(gfxHeight)) || (sh.dx < 0 && sh.x < -10) || (sh.dy < 0 && sh.y < -10)
 }
 
 type shotControl interface {
