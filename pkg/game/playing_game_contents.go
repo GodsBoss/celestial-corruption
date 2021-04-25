@@ -466,7 +466,7 @@ func spawnEnemy1() enemy {
     Type: "1",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-24),
       w: 24,
       h: 24,
     },
@@ -488,7 +488,7 @@ func spawnEnemy2() enemy {
     Type: "2",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-24),
       w: 24,
       h: 24,
     },
@@ -513,7 +513,7 @@ func spawnEnemyAlien() enemy {
     Type: "alien",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-12),
       w: 16,
       h: 12,
     },
@@ -537,7 +537,7 @@ func spawnEnemyBrainy() enemy {
     Type: "brainy",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-32),
       w: 16,
       h: 32,
     },
@@ -561,7 +561,7 @@ func spawnEnemyNightmare1() enemy {
     Type: "nightmare_1",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-36),
       w: 36,
       h: 36,
     },
@@ -583,7 +583,7 @@ func spawnEnemyNightmare2() enemy {
     Type: "nightmare_2",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-16),
       w: 16,
       h: 16,
     },
@@ -605,7 +605,7 @@ func spawnEnemyCorruptedEarthForces1() enemy {
     Type: "corrupted_earth_forces_1",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-24),
       w: 72,
       h: 24,
     },
@@ -630,7 +630,7 @@ func spawnEnemyCorruptedEarthForces2() enemy {
     Type: "corrupted_earth_forces_2",
     entity: entity {
       x: 330,
-      y: rand.Float64() * float64(gfxHeight),
+      y: rand.Float64() * float64(gfxHeight-16),
       w: 16,
       h: 16,
     },
