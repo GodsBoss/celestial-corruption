@@ -81,9 +81,9 @@ var spriteInfos = map[string]spriteInfo{
   },
   "enemy_brainy": {
     x: 2,
-    y: 46,
-    w: 24,
-    h: 24,
+    y: 138,
+    w: 16,
+    h: 32,
   },
   "enemy_nightmare_1": {
     x: 2,
